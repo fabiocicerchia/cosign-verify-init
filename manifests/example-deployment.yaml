@@ -1,0 +1,64 @@
+# The init container blocks pod startup until the app image's signature
+# verifies against the mounted public key.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-app
+  namespace: my-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels: { app: my-app }
+  template:
+    metadata:
+      labels: { app: my-app }
+    spec:
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        runAsGroup: 10001
+        seccompProfile: { type: RuntimeDefault }
+      initContainers:
+        - name: verify
+          image: fabiocicerchia/cosign-verify-init:2.5.3
+          imagePullPolicy: Always
+          env:
+            - name: VERIFY_IMAGES
+              value: "registry.example.com/my-app:1.4.2"
+            # readOnlyRootFilesystem is on, so send cosign's cache and the
+            # script's scratch files to the writable /tmp emptyDir below.
+            - name: HOME
+              value: /tmp
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: { drop: ["ALL"] }
+          resources:
+            requests: { cpu: "50m", memory: "64Mi" }
+            limits: { cpu: "250m", memory: "128Mi" }
+          volumeMounts:
+            - { name: cosign-pub, mountPath: /keys, readOnly: true }
+            - { name: tmp, mountPath: /tmp }
+      containers:
+        - name: app
+          image: registry.example.com/my-app:1.4.2
+          imagePullPolicy: Always
+          ports:
+            - { name: http, containerPort: 8080 }
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: { drop: ["ALL"] }
+          resources:
+            requests: { cpu: "100m", memory: "128Mi" }
+            limits: { cpu: "500m", memory: "256Mi" }
+          readinessProbe:
+            httpGet: { path: /healthz, port: http }
+          livenessProbe:
+            httpGet: { path: /healthz, port: http }
+      volumes:
+        - name: cosign-pub
+          configMap: { name: cosign-public-key }
+        - name: tmp
+          emptyDir: {}

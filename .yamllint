@@ -1,0 +1,5 @@
+# SHA-pinned GitHub Actions can't fit in 80 cols; relax length, keep the rest.
+extends: relaxed
+rules:
+  line-length:
+    max: 120

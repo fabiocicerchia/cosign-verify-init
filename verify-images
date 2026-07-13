@@ -1,0 +1,44 @@
+#!/bin/sh
+# Verifies every image in VERIFY_IMAGES (space-separated) and exits non-zero
+# on the first failure — failing the pod before the workload ever runs.
+#
+#   VERIFY_IMAGES        images to verify (space-separated)      [required]
+#   COSIGN_PUBLIC_KEY    inline PEM public key
+#   COSIGN_KEY_PATH      path to a mounted public key            (default /keys/cosign.pub)
+#   KEYLESS=true         keyless verification instead of a key:
+#     CERT_IDENTITY        e.g. https://github.com/org/repo/.github/workflows/release.yml@refs/tags/*
+#     CERT_OIDC_ISSUER     e.g. https://token.actions.githubusercontent.com
+#   INSECURE_SKIP_TLOG=true  skip transparency-log check (air-gapped)
+set -eu
+
+: "${VERIFY_IMAGES:?VERIFY_IMAGES is required (space-separated image refs)}"
+
+FLAGS=""
+[ "${INSECURE_SKIP_TLOG:-false}" = "true" ] && FLAGS="$FLAGS --insecure-ignore-tlog=true"
+
+if [ "${KEYLESS:-false}" = "true" ]; then
+  : "${CERT_IDENTITY:?CERT_IDENTITY is required for keyless verification}"
+  : "${CERT_OIDC_ISSUER:?CERT_OIDC_ISSUER is required for keyless verification}"
+  FLAGS="$FLAGS --certificate-identity-regexp=${CERT_IDENTITY} --certificate-oidc-issuer=${CERT_OIDC_ISSUER}"
+else
+  KEY_PATH="${COSIGN_KEY_PATH:-/keys/cosign.pub}"
+  if [ -n "${COSIGN_PUBLIC_KEY:-}" ]; then
+    KEY_PATH=/tmp/cosign.pub
+    printf '%s\n' "$COSIGN_PUBLIC_KEY" > "$KEY_PATH"
+  fi
+  [ -r "$KEY_PATH" ] || { echo "cosign-verify-init: no public key at $KEY_PATH" >&2; exit 64; }
+  FLAGS="$FLAGS --key=${KEY_PATH}"
+fi
+
+for IMAGE in $VERIFY_IMAGES; do
+  echo "cosign-verify-init: verifying $IMAGE"
+  # shellcheck disable=SC2086
+  if cosign verify $FLAGS "$IMAGE" >/dev/null 2>/tmp/err; then
+    echo "cosign-verify-init: OK $IMAGE"
+  else
+    echo "cosign-verify-init: FAILED $IMAGE" >&2
+    cat /tmp/err >&2
+    exit 1
+  fi
+done
+echo "cosign-verify-init: all images verified"
