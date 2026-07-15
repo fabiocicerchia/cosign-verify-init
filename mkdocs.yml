@@ -1,0 +1,15 @@
+site_name: cosign-verify-init
+site_url: https://fabiocicerchia.github.io/cosign-verify-init
+site_description: Kubernetes init container that verifies cosign image signatures before the main workload starts.
+repo_url: https://github.com/fabiocicerchia/cosign-verify-init
+repo_name: fabiocicerchia/cosign-verify-init
+
+theme:
+  name: material
+
+nav:
+  - Home: README.md
+  - Getting Started: getting-started.md
+  - Architecture: architecture.md
+
+docs_dir: docs
