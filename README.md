@@ -78,6 +78,10 @@ Releases are automated: merge [Conventional Commit](https://www.conventionalcomm
 PRs into `main`, then merge the release-please PR to tag `vX.Y.Z` and push the
 image to GHCR. See [CONTRIBUTING.md](CONTRIBUTING.md#releases).
 
+## Support
+
+Need help implementing this? [Get in touch](https://fabiocicerchia.it/contact).
+
 ## License
 
 Apache 2.0 — see [LICENSE](LICENSE).

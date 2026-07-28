@@ -17,7 +17,7 @@ LABEL org.opencontainers.image.title="cosign-verify-init" \
       org.opencontainers.image.description="Init container verifying image signatures before the workload starts" \
       org.opencontainers.image.version="${COSIGN_VERSION}" \
       org.opencontainers.image.licenses="Apache-2.0" \
-      org.opencontainers.image.source="https://github.com/fabiocicerchia/freelancing"
+      org.opencontainers.image.source="https://github.com/fabiocicerchia/cosign-verify-init"
 RUN apk add --no-cache ca-certificates=20260611-r0 \
  && adduser -D -u 10001 verify
 COPY --from=fetch /cosign /usr/local/bin/cosign
