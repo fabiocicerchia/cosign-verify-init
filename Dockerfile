@@ -20,6 +20,7 @@ LABEL org.opencontainers.image.title="cosign-verify-init" \
       org.opencontainers.image.source="https://github.com/fabiocicerchia/cosign-verify-init"
 RUN apk add --no-cache ca-certificates=20260611-r0 \
  && adduser -D -u 10001 verify
+COPY NOTICE /NOTICE
 COPY --from=fetch /cosign /usr/local/bin/cosign
 COPY verify-images /usr/local/bin/verify-images
 USER 10001
