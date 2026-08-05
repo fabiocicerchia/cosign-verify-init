@@ -9,7 +9,7 @@ theme:
 
 nav:
   - Home: README.md
-  - Getting Started: getting-started.md
   - Architecture: architecture.md
+  - Getting Started: getting-started.md
 
 docs_dir: docs
