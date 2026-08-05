@@ -2,26 +2,32 @@ IMAGE     ?= fabiocicerchia/cosign-verify-init
 VERSION   ?= 2.5.3
 PLATFORMS ?= linux/amd64,linux/arm64
 
-.PHONY: setup build lint test push release
+.PHONY: setup build lint test push release help
+
+.DEFAULT_GOAL := help
+
+help: ## Show this help
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | \
+	  awk 'BEGIN {FS = ":.*?## "}; {printf "  %-10s %s\n", $$1, $$2}'
 
 setup: ## Enable git hooks (gitleaks secret scan on commit)
 	git config core.hooksPath .githooks
 	@command -v pre-commit >/dev/null 2>&1 && pre-commit install || true
 
-build:
+build: ## Build the image locally
 	docker build --build-arg COSIGN_VERSION=$(VERSION) -t $(IMAGE):$(VERSION) .
 
-lint:
+lint: ## Lint the Dockerfile and shell scripts
 	docker run --rm -i hadolint/hadolint < Dockerfile
 	shellcheck verify-images test.sh
 
-test: build
+test: build ## Build, then run the smoke tests
 	./test.sh $(IMAGE):$(VERSION)
 
-push: build
+push: build ## Push the tagged image
 	docker push $(IMAGE):$(VERSION)
 
-release:
+release: ## Multi-arch buildx build and push (version + latest)
 	docker buildx build --platform $(PLATFORMS) \
 		--build-arg COSIGN_VERSION=$(VERSION) \
 		-t $(IMAGE):$(VERSION) -t $(IMAGE):latest --push .

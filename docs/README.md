@@ -1,8 +1,4 @@
-# cosign-verify-init Documentation
+# Documentation
 
-Full documentation for cosign-verify-init.
-
-## Contents
-
-- [Getting Started](getting-started.md)
-- [Architecture](architecture.md)
+- [Architecture](architecture.md) — high-level design and components.
+- [Getting Started](getting-started.md) — setup, first run and day-to-day use.
