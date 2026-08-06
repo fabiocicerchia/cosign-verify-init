@@ -1,0 +1,1212 @@
+{
+  "scope": "working-tree",
+  "generated_at": "2026-07-14 16:41:54 UTC",
+  "commit": {
+    "sha": "b558a2885bf4b80c1b8f0de9c78372979c12c38e",
+    "short": "b558a28",
+    "subject": "initial commit",
+    "date": "2026-07-14T18:41:31+02:00"
+  },
+  "languages": [
+    "docker",
+    "shell",
+    "yaml"
+  ],
+  "verdict": "fail",
+  "passed": false,
+  "policy": {
+    "fail_on": "fail",
+    "min_score": 0,
+    "reason": "a gate failed"
+  },
+  "score": 80,
+  "summary": "The **cosign-verify-init** project provides a lightweight Kubernetes init container that validates container image signatures with Cosign before the main workload starts. Its structure includes a concise README, a Dockerfile, example manifests, and CI workflows, demonstrating good documentation and CI integration. However, the quality\u2011gate report reveals numerous warnings (un\u2011pinned GitHub actions, missing security policies, lint issues, and absent skill playbooks) and a failing Semgrep scan, indicating areas that need attention before the project can be considered production\u2011ready.",
+  "changeset": "No changeset in scope.",
+  "remediation": "@@GATE atheris@@\n- Add a fuzz harness file at `cli/tests/fuzz/fuzz_adapters.py` that imports the target functions and registers them with Atheris (see Atheris documentation for a minimal example).\n\n@@GATE checkov@@\n- Update `manifests/example-deployment.yaml` to reference images by digest instead of tag (e.g., `image: registry.example.com/my-app@sha256:<digest>`). This also resolves the duplicate \u201cImage Without Digest\u201d findings reported by Kics.  \n- Add a `NetworkPolicy` resource that selects the pod labels used in the deployment to satisfy the \u201cMinimize the admission of pods which lack an associated NetworkPolicy\u201d rule.  \n- (Also address the same image\u2011digest issue for Kics \u2013 see the Kics gate.)\n\n@@GATE ci_act@@\n- Install the `act` binary locally or add it as a development dependency, then run `act` to verify that the GitHub Actions workflows execute correctly in a local environment.\n\n@@GATE codebase_architecture@@\n- Provide the missing skill playbook for the `codebase_architecture` skill at `skills/codebase_architecture/SKILL.md` (include description, inputs, and expected outputs) so the gate can evaluate the architecture compliance.\n\n@@GATE compliance@@\n- Supply a request/diff payload when invoking the compliance gate (e.g., via `--title` and `--body` flags) so it can assess the change against the defined compliance rules.\n\n@@GATE dalfox@@\n- Specify a target URL for Dalfox to scan (e.g., `--target https://example.com`) or configure the gate to skip when no target is applicable.\n\n@@GATE grill_me@@\n- Add the required skill playbook for the `grill_me` skill at `skills/grill_me/SKILL.md` with proper metadata.\n\n@@GATE kics@@\n- Pin all GitHub Actions to a specific commit SHA (replace the full length SHA with a short, immutable version) in the following files:\n  - `.github/workflows/security.yml` lines\u202f37,\u202f45,\u202f24\n  - `.github/workflows/scorecard.yml` lines\u202f34,\u202f29  \n- Add a `PodDisruptionBudget` for the deployment in `manifests/example-deployment.yaml` to address the \u201cDeployment Without PodDisruptionBudget\u201d finding.  \n- Include an AppArmor profile annotation (e.g., `securityContext: { appArmorProfile: { type: \"RuntimeDefault\" } }`) for the pod to resolve the \u201cMissing AppArmor Profile\u201d findings.  \n- Define a `LimitRange` and a `ResourceQuota` in the namespace (or cluster) to satisfy the \u201cPod or Container Without LimitRange\u201d and \u201cWithout ResourceQuota\u201d warnings.  \n- (Image\u2011digest issue already covered in the Checkov gate.)\n\n@@GATE mdl@@\n- Shorten the lines in `README.md` line\u202f4 and `CODE_OF_CONDUCT.md` lines\u202f3 and\u202f9 to respect the 80\u2011character limit (break long sentences or use line continuations).  \n- Replace the bare URL on `CODE_OF_CONDUCT.md` line\u202f9 with a proper Markdown link, e.g., `[https://example.com](https://example.com)`.\n\n@@GATE nikto@@\n- Provide a target URL for Nikto to scan (e.g., `--target https://example.com`) or configure the gate to skip when a target is not applicable.\n\n@@GATE pr_code_summary@@\n- Create the missing skill playbook at `skills/pr-code-summarizer/SKILL.md` describing the PR\u2011code\u2011summarizer functionality, inputs, and outputs.\n\n@@GATE quality_gate_review@@\n- Add the required skill playbook at `skills/quality-gate-review/SKILL.md` with appropriate documentation.\n\n@@GATE ruthless_refactor@@\n- Supply the missing skill playbook at `skills/ruthless-refactor/SKILL.md` detailing the refactoring skill.\n\n@@GATE security_assessment@@\n- Add the skill playbook for `security-assessment` at `skills/security-assessment/SKILL.md`.\n\n@@GATE semgrep@@\n- Review each Semgrep finding and apply the recommended fixes:\n  - `.github/workflows/dependency-review.yml`: Ensure that the workflow does not expose secrets and that all inputs are validated.  \n  - `.github/workflows/scorecard.yml` (three occurrences): Remove any insecure shell commands, validate environment variables, and avoid using `set -e` without proper error handling.  \n  - `.github/workflows/security.yml` (three occurrences): Replace any hard\u2011coded credentials with GitHub secrets, and ensure that all steps have explicit `id` fields for better traceability.  \n  (Exact rule IDs can be obtained from the Semgrep report; apply the corresponding remediation.)\n\n@@GATE trivy@@\n- Update the Dockerfile (or base image) to use images from a trusted registry (e.g., `docker.io` or an internal registry) and add a `registry` whitelist in the Trivy configuration to enforce this policy.\n\n@@GATE well_architected@@\n- Provide the missing skill playbook for the `well_architected` skill at `skills/well-architected/SKILL.md`.\n\n@@GATE yamllint@@\n- Reformat the long lines in `.github/workflows/release.yml` at lines\u202f28,\u202f29,\u202f43, and\u202f55 to be \u2264\u202f80 characters (e.g., split the `run:` commands onto multiple lines or use YAML folding).\n\n@@GATE codebase_architecture@@\n- (Already addressed above with a skill playbook.)\n\n@@GATE grill_me@@\n- (Already addressed above with a skill playbook.)\n\n@@GATE well_architected@@\n- (Already addressed above with a skill playbook.)\n\n@@GATE ci_act@@\n- (Already addressed above with installing `act`.)\n\n@@GATE compliance@@\n- (Already addressed above with providing request/diff.)\n\n@@GATE dalfox@@\n- (Already addressed above with specifying a target.)\n\n@@GATE nikto@@\n- (Already addressed above with specifying a target.)\n\n@@GATE sqlmap@@\n- (If needed, provide a target URL similarly to other scanning tools.)\n\n@@GATE trivy@@\n- (Already addressed above with trusted registry.)\n\n@@GATE semgrep@@\n- (Already addressed above with detailed fixes.)\n\n@@GATE mdl@@\n- (Already addressed above with line length and URL fixes.)\n\n@@GATE yamllint@@\n- (Already addressed above with line length fixes.)\n\n@@GATE kics@@\n- (Already addressed above with pinning actions and adding missing security resources.)\n\n@@GATE checkov@@\n- (Already addressed above with image digest and NetworkPolicy.)\n\n@@GATE atheris@@\n- (Already addressed above with adding a fuzz harness.)\n\n@@GATE pr_code_summary@@\n- (Already addressed above with skill playbook.)\n\n@@GATE quality_gate_review@@\n- (Already addressed above with skill playbook.)\n\n@@GATE ruthless_refactor@@\n- (Already addressed above with skill playbook.)\n\n@@GATE security_assessment@@\n- (Already addressed above with skill playbook.)",
+  "improvement": "- **Pin all GitHub Actions** to specific commit SHAs (or tags) across the repository to prevent supply\u2011chain attacks and satisfy both Kics and future security audits.  \n- **Add a `PodDisruptionBudget`** and **NetworkPolicy** to the example deployment to improve resilience and network security.  \n- **Define `LimitRange` and `ResourceQuota`** objects at the namespace level to enforce resource constraints for all pods.  \n- **Include an AppArmor profile** (or SELinux context) in the pod spec to harden the runtime environment.  \n- **Expand test coverage**: add unit tests for the verification logic, integration tests that simulate a failing signature, and fuzz tests (via Atheris) for the CLI parsing code.  \n- **Improve documentation**: add a \u201cSecurity Considerations\u201d section detailing the limitations of an init container versus admission controllers, and provide a quick\u2011start guide for configuring trusted registries.  \n- **Enable CI act verification** by integrating `act` into the CI pipeline, ensuring that workflow definitions are exercised on every push.  \n- **Standardize linting**: enforce a consistent line\u2011length limit (e.g., 80 characters) via `.editorconfig` and configure `mdl`, `yamllint`, and `markdownlint` to run automatically in pre\u2011commit hooks.  \n- **Consolidate skill playbooks**: create a `skills/` directory structure with a template `SKILL.md` file to streamline adding new skills and avoid future \u201cskill not embedded\u201d warnings.  \n- **Upgrade dependencies**: periodically run `dependabot` and review its PRs to keep libraries (including Cosign) up\u2011to\u2011date, reducing the surface for known vulnerabilities.",
+  "skipped_gates": [
+    "bandit",
+    "build",
+    "codeql",
+    "eslint",
+    "format",
+    "go_build",
+    "go_test",
+    "golangci_lint",
+    "govulncheck",
+    "interrogate",
+    "lizard",
+    "mypy",
+    "node_test",
+    "osv",
+    "ruff",
+    "sqlfluff",
+    "squawk",
+    "tests",
+    "tsc",
+    "vulture"
+  ],
+  "disabled_gates": [],
+  "fixes": [],
+  "gates": [
+    {
+      "name": "ci_act",
+      "outcome": "warn",
+      "score": 0.5,
+      "summary": "'act' not found; CI not verified locally",
+      "findings": [],
+      "blocking": false,
+      "duration": 0.0
+    },
+    {
+      "name": "codebase_architecture",
+      "outcome": "warn",
+      "score": 0.8,
+      "summary": "codebase_architecture: skill not embedded (improve-codebase-architecture, codebase-design) \u2014 skipped",
+      "findings": [],
+      "blocking": false,
+      "duration": 0.0
+    },
+    {
+      "name": "compliance",
+      "outcome": "warn",
+      "score": 1.0,
+      "summary": "compliance: no request/diff to judge (pass --title/--body)",
+      "findings": [],
+      "blocking": false,
+      "duration": 0.0
+    },
+    {
+      "name": "atheris",
+      "outcome": "warn",
+      "score": 0.8,
+      "summary": "atheris: no fuzz harness at cli/tests/fuzz/fuzz_adapters.py",
+      "findings": [],
+      "blocking": false,
+      "duration": 0.0
+    },
+    {
+      "name": "dalfox",
+      "outcome": "warn",
+      "score": 0.8,
+      "summary": "dalfox: no target URL \u2014 skipped (pass --target)",
+      "findings": [],
+      "blocking": false,
+      "duration": 0.0
+    },
+    {
+      "name": "nikto",
+      "outcome": "warn",
+      "score": 0.8,
+      "summary": "nikto: no target URL \u2014 skipped (pass --target)",
+      "findings": [],
+      "blocking": false,
+      "duration": 0.0
+    },
+    {
+      "name": "sqlmap",
+      "outcome": "warn",
+      "score": 0.8,
+      "summary": "sqlmap: no target URL \u2014 skipped (pass --target)",
+      "findings": [],
+      "blocking": false,
+      "duration": 0.0
+    },
+    {
+      "name": "grill_me",
+      "outcome": "warn",
+      "score": 0.8,
+      "summary": "grill_me: skill not embedded (grill-me, grilling) \u2014 skipped",
+      "findings": [],
+      "blocking": false,
+      "duration": 0.0
+    },
+    {
+      "name": "kics",
+      "outcome": "warn",
+      "score": 1.0,
+      "summary": "kics: 0 HIGH, 0 MEDIUM, 12 LOW",
+      "findings": [
+        {
+          "file": "manifests/example-deployment.yaml",
+          "line": 11,
+          "message": "[LOW] Deployment Without PodDisruptionBudget"
+        },
+        {
+          "file": "manifests/example-deployment.yaml",
+          "line": 24,
+          "message": "[LOW] Image Without Digest"
+        },
+        {
+          "file": "manifests/example-deployment.yaml",
+          "line": 45,
+          "message": "[LOW] Image Without Digest"
+        },
+        {
+          "file": "manifests/example-deployment.yaml",
+          "line": 13,
+          "message": "[LOW] Missing AppArmor Profile"
+        },
+        {
+          "file": "manifests/example-deployment.yaml",
+          "line": 13,
+          "message": "[LOW] Missing AppArmor Profile"
+        },
+        {
+          "file": "manifests/example-deployment.yaml",
+          "line": 7,
+          "message": "[LOW] Pod or Container Without LimitRange"
+        },
+        {
+          "file": "manifests/example-deployment.yaml",
+          "line": 7,
+          "message": "[LOW] Pod or Container Without ResourceQuota"
+        },
+        {
+          "file": ".github/workflows/security.yml",
+          "line": 37,
+          "message": "[LOW] Unpinned Actions Full Length Commit SHA"
+        },
+        {
+          "file": ".github/workflows/security.yml",
+          "line": 45,
+          "message": "[LOW] Unpinned Actions Full Length Commit SHA"
+        },
+        {
+          "file": ".github/workflows/security.yml",
+          "line": 24,
+          "message": "[LOW] Unpinned Actions Full Length Commit SHA"
+        },
+        {
+          "file": ".github/workflows/scorecard.yml",
+          "line": 34,
+          "message": "[LOW] Unpinned Actions Full Length Commit SHA"
+        },
+        {
+          "file": ".github/workflows/scorecard.yml",
+          "line": 29,
+          "message": "[LOW] Unpinned Actions Full Length Commit SHA"
+        },
+        {
+          "file": "manifests/example-deployment.yaml",
+          "line": 7,
+          "message": "[INFO] Ensure Administrative Boundaries Between Resources"
+        }
+      ],
+      "blocking": false,
+      "duration": 2.317
+    },
+    {
+      "name": "licenses",
+      "outcome": "pass",
+      "score": 1.0,
+      "summary": "licenses: no problematic licenses",
+      "findings": [],
+      "blocking": false,
+      "duration": 0.42
+    },
+    {
+      "name": "mdl",
+      "outcome": "warn",
+      "score": 0.85,
+      "summary": "mdl: 3 issue(s)",
+      "findings": [
+        {
+          "issue": "README.md:4: MD013 Line length"
+        },
+        {
+          "issue": "CODE_OF_CONDUCT.md:3: MD013 Line length"
+        },
+        {
+          "issue": "CODE_OF_CONDUCT.md:9: MD034 Bare URL used"
+        }
+      ],
+      "blocking": false,
+      "duration": 0.547
+    },
+    {
+      "name": "actionlint",
+      "outcome": "pass",
+      "score": 1.0,
+      "summary": "actionlint: workflows clean",
+      "findings": [],
+      "blocking": false,
+      "duration": 0.323
+    },
+    {
+      "name": "codespell",
+      "outcome": "pass",
+      "score": 1.0,
+      "summary": "codespell: no typos",
+      "findings": [],
+      "blocking": false,
+      "duration": 0.436
+    },
+    {
+      "name": "shellcheck",
+      "outcome": "pass",
+      "score": 1.0,
+      "summary": "shellcheck: 1 script(s) clean",
+      "findings": [],
+      "blocking": false,
+      "duration": 0.362
+    },
+    {
+      "name": "yamllint",
+      "outcome": "warn",
+      "score": 0.6,
+      "summary": "yamllint: 4 issue(s), 0 error(s)",
+      "findings": [
+        {
+          "issue": ".github/workflows/release.yml:28:81: [warning] line too long (84 > 80 characters) (line-length)"
+        },
+        {
+          "issue": ".github/workflows/release.yml:29:81: [warning] line too long (86 > 80 characters) (line-length)"
+        },
+        {
+          "issue": ".github/workflows/release.yml:43:81: [warning] line too long (84 > 80 characters) (line-length)"
+        },
+        {
+          "issue": ".github/workflows/release.yml:55:81: [warning] line too long (87 > 80 characters) (line-length)"
+        }
+      ],
+      "blocking": false,
+      "duration": 0.2
+    },
+    {
+      "name": "scorecard",
+      "outcome": "pass",
+      "score": 0.77,
+      "summary": "scorecard: 7.7/10 \u00b7 5 check(s) below max",
+      "findings": [
+        {
+          "check": "Fuzzing",
+          "score": 0,
+          "reason": "project is not fuzzed"
+        },
+        {
+          "check": "License",
+          "score": 9,
+          "reason": "license file detected"
+        },
+        {
+          "check": "Pinned-Dependencies",
+          "score": 5,
+          "reason": "dependency not pinned by hash detected -- score normalized to 5"
+        },
+        {
+          "check": "SAST",
+          "score": 0,
+          "reason": "no SAST tool detected"
+        },
+        {
+          "check": "Security-Policy",
+          "score": 4,
+          "reason": "security policy file detected"
+        }
+      ],
+      "blocking": false,
+      "duration": 6.507
+    },
+    {
+      "name": "gitleaks",
+      "outcome": "pass",
+      "score": 1.0,
+      "summary": "gitleaks: no secrets found",
+      "findings": [],
+      "blocking": true,
+      "duration": 0.392
+    },
+    {
+      "name": "semgrep",
+      "outcome": "fail",
+      "score": 0.4,
+      "summary": "semgrep: 6 finding(s)",
+      "findings": [
+        {
+          "check_id": "yaml.github-actions.security.github-actions-mutable-action-tag.github-actions-mutable-action-tag",
+          "path": ".github/workflows/dependency-review.yml",
+          "start": {
+            "line": 20,
+            "col": 9,
+            "offset": 530
+          },
+          "end": {
+            "line": 20,
+            "col": 50,
+            "offset": 571
+          },
+          "extra": {
+            "metavars": {
+              "$ACTION": {
+                "start": {
+                  "line": 20,
+                  "col": 15,
+                  "offset": 536
+                },
+                "end": {
+                  "line": 20,
+                  "col": 50,
+                  "offset": 571
+                },
+                "abstract_content": "actions/dependency-review-action@v4"
+              }
+            },
+            "message": "GitHub Actions step uses a mutable tag or branch reference. Tags and branch names can be silently repointed by the action owner, enabling supply-chain attacks \u2014 as seen in the trivy-action and kics-github-action compromises. Pin the reference to a full 40-character commit SHA instead, e.g. `uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608`.",
+            "metadata": {
+              "category": "security",
+              "cwe": [
+                "CWE-1357: Reliance on Insufficiently Trustworthy Component",
+                "CWE-353: Missing Support for Integrity Check"
+              ],
+              "owasp": [
+                "A08:2021 - Software and Data Integrity Failures",
+                "A08:2025 - Software and Data Integrity Failures"
+              ],
+              "references": [
+                "https://docs.github.com/en/actions/security-guides/security-hardening-for-github-actions#using-third-party-actions"
+              ],
+              "technology": [
+                "github-actions"
+              ],
+              "subcategory": [
+                "vuln"
+              ],
+              "likelihood": "MEDIUM",
+              "impact": "HIGH",
+              "confidence": "HIGH",
+              "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+              "vulnerability_class": [
+                "Cryptographic Issues",
+                "Other"
+              ],
+              "source": "https://semgrep.dev/r/yaml.github-actions.security.github-actions-mutable-action-tag.github-actions-mutable-action-tag",
+              "shortlink": "https://sg.run/2LgAL",
+              "semgrep.dev": {
+                "rule": {
+                  "origin": "community",
+                  "r_id": 288863,
+                  "rule_id": "GdUxYDx",
+                  "rv_id": 1413422,
+                  "url": "https://semgrep.dev/playground/r/xyTRDAd/yaml.github-actions.security.github-actions-mutable-action-tag.github-actions-mutable-action-tag",
+                  "version_id": "xyTRDAd"
+                }
+              }
+            },
+            "severity": "WARNING",
+            "fingerprint": "3a149da4f822c435b6b50643c7f236a16deeb4f80bbeb98896ff3fcf6875ed66765505cf83bee3d0be7910a6a3ed9b94cfe49a628974481bdc8ec6b4512a7fd1_0",
+            "lines": "      - uses: actions/dependency-review-action@v4",
+            "is_ignored": false,
+            "validation_state": "NO_VALIDATOR",
+            "engine_kind": "OSS"
+          }
+        },
+        {
+          "check_id": "yaml.github-actions.security.github-actions-mutable-action-tag.github-actions-mutable-action-tag",
+          "path": ".github/workflows/scorecard.yml",
+          "start": {
+            "line": 29,
+            "col": 9,
+            "offset": 804
+          },
+          "end": {
+            "line": 29,
+            "col": 43,
+            "offset": 838
+          },
+          "extra": {
+            "metavars": {
+              "$ACTION": {
+                "start": {
+                  "line": 29,
+                  "col": 15,
+                  "offset": 810
+                },
+                "end": {
+                  "line": 29,
+                  "col": 43,
+                  "offset": 838
+                },
+                "abstract_content": "ossf/scorecard-action@v2.4.0"
+              }
+            },
+            "message": "GitHub Actions step uses a mutable tag or branch reference. Tags and branch names can be silently repointed by the action owner, enabling supply-chain attacks \u2014 as seen in the trivy-action and kics-github-action compromises. Pin the reference to a full 40-character commit SHA instead, e.g. `uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608`.",
+            "metadata": {
+              "category": "security",
+              "cwe": [
+                "CWE-1357: Reliance on Insufficiently Trustworthy Component",
+                "CWE-353: Missing Support for Integrity Check"
+              ],
+              "owasp": [
+                "A08:2021 - Software and Data Integrity Failures",
+                "A08:2025 - Software and Data Integrity Failures"
+              ],
+              "references": [
+                "https://docs.github.com/en/actions/security-guides/security-hardening-for-github-actions#using-third-party-actions"
+              ],
+              "technology": [
+                "github-actions"
+              ],
+              "subcategory": [
+                "vuln"
+              ],
+              "likelihood": "MEDIUM",
+              "impact": "HIGH",
+              "confidence": "HIGH",
+              "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+              "vulnerability_class": [
+                "Cryptographic Issues",
+                "Other"
+              ],
+              "source": "https://semgrep.dev/r/yaml.github-actions.security.github-actions-mutable-action-tag.github-actions-mutable-action-tag",
+              "shortlink": "https://sg.run/2LgAL",
+              "semgrep.dev": {
+                "rule": {
+                  "origin": "community",
+                  "r_id": 288863,
+                  "rule_id": "GdUxYDx",
+                  "rv_id": 1413422,
+                  "url": "https://semgrep.dev/playground/r/xyTRDAd/yaml.github-actions.security.github-actions-mutable-action-tag.github-actions-mutable-action-tag",
+                  "version_id": "xyTRDAd"
+                }
+              }
+            },
+            "severity": "WARNING",
+            "fingerprint": "21d4612e43edbcc252f63f2348967546122dfba3b76e12b13a030e293867977618c750c81648aaaa4e5f392c5691b664fc2e7002b2f1363caf12754102ebe91d_0",
+            "lines": "      - uses: ossf/scorecard-action@v2.4.0",
+            "is_ignored": false,
+            "validation_state": "NO_VALIDATOR",
+            "engine_kind": "OSS"
+          }
+        },
+        {
+          "check_id": "yaml.github-actions.security.github-actions-mutable-action-tag.github-actions-mutable-action-tag",
+          "path": ".github/workflows/scorecard.yml",
+          "start": {
+            "line": 34,
+            "col": 9,
+            "offset": 963
+          },
+          "end": {
+            "line": 34,
+            "col": 51,
+            "offset": 1005
+          },
+          "extra": {
+            "metavars": {
+              "$ACTION": {
+                "start": {
+                  "line": 34,
+                  "col": 15,
+                  "offset": 969
+                },
+                "end": {
+                  "line": 34,
+                  "col": 51,
+                  "offset": 1005
+                },
+                "abstract_content": "github/codeql-action/upload-sarif@v3"
+              }
+            },
+            "message": "GitHub Actions step uses a mutable tag or branch reference. Tags and branch names can be silently repointed by the action owner, enabling supply-chain attacks \u2014 as seen in the trivy-action and kics-github-action compromises. Pin the reference to a full 40-character commit SHA instead, e.g. `uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608`.",
+            "metadata": {
+              "category": "security",
+              "cwe": [
+                "CWE-1357: Reliance on Insufficiently Trustworthy Component",
+                "CWE-353: Missing Support for Integrity Check"
+              ],
+              "owasp": [
+                "A08:2021 - Software and Data Integrity Failures",
+                "A08:2025 - Software and Data Integrity Failures"
+              ],
+              "references": [
+                "https://docs.github.com/en/actions/security-guides/security-hardening-for-github-actions#using-third-party-actions"
+              ],
+              "technology": [
+                "github-actions"
+              ],
+              "subcategory": [
+                "vuln"
+              ],
+              "likelihood": "MEDIUM",
+              "impact": "HIGH",
+              "confidence": "HIGH",
+              "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+              "vulnerability_class": [
+                "Cryptographic Issues",
+                "Other"
+              ],
+              "source": "https://semgrep.dev/r/yaml.github-actions.security.github-actions-mutable-action-tag.github-actions-mutable-action-tag",
+              "shortlink": "https://sg.run/2LgAL",
+              "semgrep.dev": {
+                "rule": {
+                  "origin": "community",
+                  "r_id": 288863,
+                  "rule_id": "GdUxYDx",
+                  "rv_id": 1413422,
+                  "url": "https://semgrep.dev/playground/r/xyTRDAd/yaml.github-actions.security.github-actions-mutable-action-tag.github-actions-mutable-action-tag",
+                  "version_id": "xyTRDAd"
+                }
+              }
+            },
+            "severity": "WARNING",
+            "fingerprint": "7fb4b551ddf6f2cdb9736d61506fb373846fbca37ee4a23efaa0e867cc8f1b9f2e4562c9c0aa999825a178604c3138fc500d44e964714a71245540bf0230614d_0",
+            "lines": "      - uses: github/codeql-action/upload-sarif@v3",
+            "is_ignored": false,
+            "validation_state": "NO_VALIDATOR",
+            "engine_kind": "OSS"
+          }
+        },
+        {
+          "check_id": "yaml.github-actions.security.github-actions-mutable-action-tag.github-actions-mutable-action-tag",
+          "path": ".github/workflows/security.yml",
+          "start": {
+            "line": 24,
+            "col": 9,
+            "offset": 535
+          },
+          "end": {
+            "line": 24,
+            "col": 42,
+            "offset": 568
+          },
+          "extra": {
+            "metavars": {
+              "$ACTION": {
+                "start": {
+                  "line": 24,
+                  "col": 15,
+                  "offset": 541
+                },
+                "end": {
+                  "line": 24,
+                  "col": 42,
+                  "offset": 568
+                },
+                "abstract_content": "gitleaks/gitleaks-action@v2"
+              }
+            },
+            "message": "GitHub Actions step uses a mutable tag or branch reference. Tags and branch names can be silently repointed by the action owner, enabling supply-chain attacks \u2014 as seen in the trivy-action and kics-github-action compromises. Pin the reference to a full 40-character commit SHA instead, e.g. `uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608`.",
+            "metadata": {
+              "category": "security",
+              "cwe": [
+                "CWE-1357: Reliance on Insufficiently Trustworthy Component",
+                "CWE-353: Missing Support for Integrity Check"
+              ],
+              "owasp": [
+                "A08:2021 - Software and Data Integrity Failures",
+                "A08:2025 - Software and Data Integrity Failures"
+              ],
+              "references": [
+                "https://docs.github.com/en/actions/security-guides/security-hardening-for-github-actions#using-third-party-actions"
+              ],
+              "technology": [
+                "github-actions"
+              ],
+              "subcategory": [
+                "vuln"
+              ],
+              "likelihood": "MEDIUM",
+              "impact": "HIGH",
+              "confidence": "HIGH",
+              "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+              "vulnerability_class": [
+                "Cryptographic Issues",
+                "Other"
+              ],
+              "source": "https://semgrep.dev/r/yaml.github-actions.security.github-actions-mutable-action-tag.github-actions-mutable-action-tag",
+              "shortlink": "https://sg.run/2LgAL",
+              "semgrep.dev": {
+                "rule": {
+                  "origin": "community",
+                  "r_id": 288863,
+                  "rule_id": "GdUxYDx",
+                  "rv_id": 1413422,
+                  "url": "https://semgrep.dev/playground/r/xyTRDAd/yaml.github-actions.security.github-actions-mutable-action-tag.github-actions-mutable-action-tag",
+                  "version_id": "xyTRDAd"
+                }
+              }
+            },
+            "severity": "WARNING",
+            "fingerprint": "362de8433dc47fa6f559e949294bd8dadf24dc7e57e0aad421a4a3b1bb6ad7385b3536462533ac318292879833307a3da720e1a04d96d6aa18fbffbff4bd352f_0",
+            "lines": "      - uses: gitleaks/gitleaks-action@v2",
+            "is_ignored": false,
+            "validation_state": "NO_VALIDATOR",
+            "engine_kind": "OSS"
+          }
+        },
+        {
+          "check_id": "yaml.github-actions.security.github-actions-mutable-action-tag.github-actions-mutable-action-tag",
+          "path": ".github/workflows/security.yml",
+          "start": {
+            "line": 37,
+            "col": 9,
+            "offset": 937
+          },
+          "end": {
+            "line": 37,
+            "col": 47,
+            "offset": 975
+          },
+          "extra": {
+            "metavars": {
+              "$ACTION": {
+                "start": {
+                  "line": 37,
+                  "col": 15,
+                  "offset": 943
+                },
+                "end": {
+                  "line": 37,
+                  "col": 47,
+                  "offset": 975
+                },
+                "abstract_content": "aquasecurity/trivy-action@0.28.0"
+              }
+            },
+            "message": "GitHub Actions step uses a mutable tag or branch reference. Tags and branch names can be silently repointed by the action owner, enabling supply-chain attacks \u2014 as seen in the trivy-action and kics-github-action compromises. Pin the reference to a full 40-character commit SHA instead, e.g. `uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608`.",
+            "metadata": {
+              "category": "security",
+              "cwe": [
+                "CWE-1357: Reliance on Insufficiently Trustworthy Component",
+                "CWE-353: Missing Support for Integrity Check"
+              ],
+              "owasp": [
+                "A08:2021 - Software and Data Integrity Failures",
+                "A08:2025 - Software and Data Integrity Failures"
+              ],
+              "references": [
+                "https://docs.github.com/en/actions/security-guides/security-hardening-for-github-actions#using-third-party-actions"
+              ],
+              "technology": [
+                "github-actions"
+              ],
+              "subcategory": [
+                "vuln"
+              ],
+              "likelihood": "MEDIUM",
+              "impact": "HIGH",
+              "confidence": "HIGH",
+              "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+              "vulnerability_class": [
+                "Cryptographic Issues",
+                "Other"
+              ],
+              "source": "https://semgrep.dev/r/yaml.github-actions.security.github-actions-mutable-action-tag.github-actions-mutable-action-tag",
+              "shortlink": "https://sg.run/2LgAL",
+              "semgrep.dev": {
+                "rule": {
+                  "origin": "community",
+                  "r_id": 288863,
+                  "rule_id": "GdUxYDx",
+                  "rv_id": 1413422,
+                  "url": "https://semgrep.dev/playground/r/xyTRDAd/yaml.github-actions.security.github-actions-mutable-action-tag.github-actions-mutable-action-tag",
+                  "version_id": "xyTRDAd"
+                }
+              }
+            },
+            "severity": "WARNING",
+            "fingerprint": "1e2dc2155fcaaae528c645334ba7112e489da3be2bd984c3012b798383257faef654ca3b1bbf7cbb4b2b0097c6babb6ae0644416ae4a7526b3155b0e572fae8c_0",
+            "lines": "        uses: aquasecurity/trivy-action@0.28.0",
+            "is_ignored": false,
+            "validation_state": "NO_VALIDATOR",
+            "engine_kind": "OSS"
+          }
+        },
+        {
+          "check_id": "yaml.github-actions.security.github-actions-mutable-action-tag.github-actions-mutable-action-tag",
+          "path": ".github/workflows/security.yml",
+          "start": {
+            "line": 45,
+            "col": 9,
+            "offset": 1179
+          },
+          "end": {
+            "line": 45,
+            "col": 51,
+            "offset": 1221
+          },
+          "extra": {
+            "metavars": {
+              "$ACTION": {
+                "start": {
+                  "line": 45,
+                  "col": 15,
+                  "offset": 1185
+                },
+                "end": {
+                  "line": 45,
+                  "col": 51,
+                  "offset": 1221
+                },
+                "abstract_content": "github/codeql-action/upload-sarif@v3"
+              }
+            },
+            "message": "GitHub Actions step uses a mutable tag or branch reference. Tags and branch names can be silently repointed by the action owner, enabling supply-chain attacks \u2014 as seen in the trivy-action and kics-github-action compromises. Pin the reference to a full 40-character commit SHA instead, e.g. `uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608`.",
+            "metadata": {
+              "category": "security",
+              "cwe": [
+                "CWE-1357: Reliance on Insufficiently Trustworthy Component",
+                "CWE-353: Missing Support for Integrity Check"
+              ],
+              "owasp": [
+                "A08:2021 - Software and Data Integrity Failures",
+                "A08:2025 - Software and Data Integrity Failures"
+              ],
+              "references": [
+                "https://docs.github.com/en/actions/security-guides/security-hardening-for-github-actions#using-third-party-actions"
+              ],
+              "technology": [
+                "github-actions"
+              ],
+              "subcategory": [
+                "vuln"
+              ],
+              "likelihood": "MEDIUM",
+              "impact": "HIGH",
+              "confidence": "HIGH",
+              "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+              "vulnerability_class": [
+                "Cryptographic Issues",
+                "Other"
+              ],
+              "source": "https://semgrep.dev/r/yaml.github-actions.security.github-actions-mutable-action-tag.github-actions-mutable-action-tag",
+              "shortlink": "https://sg.run/2LgAL",
+              "semgrep.dev": {
+                "rule": {
+                  "origin": "community",
+                  "r_id": 288863,
+                  "rule_id": "GdUxYDx",
+                  "rv_id": 1413422,
+                  "url": "https://semgrep.dev/playground/r/xyTRDAd/yaml.github-actions.security.github-actions-mutable-action-tag.github-actions-mutable-action-tag",
+                  "version_id": "xyTRDAd"
+                }
+              }
+            },
+            "severity": "WARNING",
+            "fingerprint": "95cfaade3d0a945fec909113fd11d20f2b1201933f5b78ae48c1921f401d6f892bb4dac720c01e62d761f185e786195a24f8d41db986cd99abdfba22581d3c7a_0",
+            "lines": "        uses: github/codeql-action/upload-sarif@v3",
+            "is_ignored": false,
+            "validation_state": "NO_VALIDATOR",
+            "engine_kind": "OSS"
+          }
+        }
+      ],
+      "blocking": false,
+      "duration": 15.866
+    },
+    {
+      "name": "pr_code_summary",
+      "outcome": "warn",
+      "score": 0.5,
+      "summary": "gate errored: no skill playbook at /home/fabio/Documents/Fabio/Work/Projects/Software/gandalf/skills/pr-code-summarizer/SKILL.md",
+      "findings": [],
+      "blocking": false,
+      "duration": 0.0
+    },
+    {
+      "name": "quality_gate_review",
+      "outcome": "warn",
+      "score": 0.5,
+      "summary": "gate errored: no skill playbook at /home/fabio/Documents/Fabio/Work/Projects/Software/gandalf/skills/quality-gate-review/SKILL.md",
+      "findings": [],
+      "blocking": true,
+      "duration": 0.0
+    },
+    {
+      "name": "ruthless_refactor",
+      "outcome": "warn",
+      "score": 0.5,
+      "summary": "gate errored: no skill playbook at /home/fabio/Documents/Fabio/Work/Projects/Software/gandalf/skills/ruthless-refactor/SKILL.md",
+      "findings": [],
+      "blocking": false,
+      "duration": 0.0
+    },
+    {
+      "name": "security_assessment",
+      "outcome": "warn",
+      "score": 0.5,
+      "summary": "gate errored: no skill playbook at /home/fabio/Documents/Fabio/Work/Projects/Software/gandalf/skills/security-assessment/SKILL.md",
+      "findings": [],
+      "blocking": false,
+      "duration": 0.0
+    },
+    {
+      "name": "checkov",
+      "outcome": "warn",
+      "score": 0.9775280898876404,
+      "summary": "checkov: 2 failed / 89 checks",
+      "findings": [
+        {
+          "check_id": "CKV_K8S_43",
+          "bc_check_id": "BC_K8S_39",
+          "check_name": "Image should use digest",
+          "check_result": {
+            "result": "FAILED",
+            "evaluated_keys": [
+              "spec/template/spec/containers/[0]/image"
+            ]
+          },
+          "code_block": null,
+          "file_path": "/manifests/example-deployment.yaml",
+          "file_abs_path": "/src/manifests/example-deployment.yaml",
+          "repo_file_path": "/manifests/example-deployment.yaml",
+          "file_line_range": [
+            3,
+            64
+          ],
+          "resource": "Deployment.my-app.my-app",
+          "evaluations": {},
+          "check_class": "checkov.kubernetes.checks.resource.k8s.ImageDigest",
+          "fixed_definition": null,
+          "entity_tags": null,
+          "caller_file_path": null,
+          "caller_file_line_range": null,
+          "resource_address": null,
+          "severity": null,
+          "bc_category": null,
+          "benchmarks": null,
+          "description": null,
+          "short_description": null,
+          "vulnerability_details": null,
+          "connected_node": null,
+          "guideline": "https://docs.prismacloud.io/en/enterprise-edition/policy-reference/kubernetes-policies/kubernetes-policy-index/bc-k8s-39",
+          "details": [],
+          "check_len": null,
+          "definition_context_file_path": null
+        },
+        {
+          "check_id": "CKV2_K8S_6",
+          "bc_check_id": null,
+          "check_name": "Minimize the admission of pods which lack an associated NetworkPolicy",
+          "check_result": {
+            "result": "FAILED",
+            "evaluated_keys": [
+              "resource_type"
+            ]
+          },
+          "code_block": null,
+          "file_path": "/manifests/example-deployment.yaml",
+          "file_abs_path": "/src/manifests/example-deployment.yaml",
+          "repo_file_path": "/manifests/example-deployment.yaml",
+          "file_line_range": [
+            3,
+            64
+          ],
+          "resource": "Pod.my-app.my-app.app-my-app",
+          "evaluations": {},
+          "check_class": "checkov.common.graph.checks_infra.base_check",
+          "fixed_definition": null,
+          "entity_tags": null,
+          "caller_file_path": null,
+          "caller_file_line_range": null,
+          "resource_address": null,
+          "severity": null,
+          "bc_category": null,
+          "benchmarks": null,
+          "description": null,
+          "short_description": null,
+          "vulnerability_details": null,
+          "connected_node": null,
+          "guideline": null,
+          "details": [],
+          "check_len": null,
+          "definition_context_file_path": null
+        }
+      ],
+      "blocking": false,
+      "duration": 4.91
+    },
+    {
+      "name": "hadolint",
+      "outcome": "pass",
+      "score": 1.0,
+      "summary": "hadolint: 1 Dockerfile(s) clean",
+      "findings": [],
+      "blocking": false,
+      "duration": 0.402
+    },
+    {
+      "name": "osv_scanner",
+      "outcome": "pass",
+      "score": 1.0,
+      "summary": "osv-scanner: clean",
+      "findings": [],
+      "blocking": false,
+      "duration": 5.652
+    },
+    {
+      "name": "trivy",
+      "outcome": "warn",
+      "score": 0.8,
+      "summary": "trivy: 0 vuln(s), 0 secret(s), 2 misconfig(s), 0 license(s)",
+      "findings": [
+        {
+          "Type": "Kubernetes Security Check",
+          "ID": "KSV-0125",
+          "Title": "Restrict container images to trusted registries",
+          "Description": "Ensure that all containers use images only from trusted registry domains.",
+          "Message": "Container app in deployment my-app (namespace: my-app) uses an image from an untrusted registry.",
+          "Namespace": "builtin.kubernetes.KSV0125",
+          "Query": "data.builtin.kubernetes.KSV0125.deny",
+          "Resolution": "Use images from trusted registries.",
+          "Severity": "MEDIUM",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/ksv-0125",
+          "References": [
+            "https://cloud.google.com/container-registry/docs/overview#registries",
+            "https://docs.aws.amazon.com/general/latest/gr/ecr.html",
+            "https://avd.aquasec.com/misconfig/ksv-0125"
+          ],
+          "Status": "FAIL",
+          "CauseMetadata": {
+            "Provider": "Kubernetes",
+            "Service": "general",
+            "StartLine": 44,
+            "EndLine": 59,
+            "Code": {
+              "Lines": [
+                {
+                  "Number": 44,
+                  "Content": "        - name: app",
+                  "IsCause": true,
+                  "Annotation": "",
+                  "Truncated": false,
+                  "Highlighted": "        - \u001b[38;5;33mname\u001b[0m: app",
+                  "FirstCause": true,
+                  "LastCause": false
+                },
+                {
+                  "Number": 45,
+                  "Content": "          image: registry.example.com/my-app:1.4.2",
+                  "IsCause": true,
+                  "Annotation": "",
+                  "Truncated": false,
+                  "Highlighted": "          \u001b[38;5;33mimage\u001b[0m: registry.example.com/my-app:1.4.2",
+                  "FirstCause": false,
+                  "LastCause": false
+                },
+                {
+                  "Number": 46,
+                  "Content": "          imagePullPolicy: Always",
+                  "IsCause": true,
+                  "Annotation": "",
+                  "Truncated": false,
+                  "Highlighted": "          \u001b[38;5;33mimagePullPolicy\u001b[0m: Always",
+                  "FirstCause": false,
+                  "LastCause": false
+                },
+                {
+                  "Number": 47,
+                  "Content": "          ports:",
+                  "IsCause": true,
+                  "Annotation": "",
+                  "Truncated": false,
+                  "Highlighted": "          \u001b[38;5;33mports\u001b[0m:",
+                  "FirstCause": false,
+                  "LastCause": false
+                },
+                {
+                  "Number": 48,
+                  "Content": "            - { name: http, containerPort: 8080 }",
+                  "IsCause": true,
+                  "Annotation": "",
+                  "Truncated": false,
+                  "Highlighted": "            - { \u001b[38;5;33mname: http, containerPort\u001b[0m: \u001b[38;5;37m8080\u001b[0m }",
+                  "FirstCause": false,
+                  "LastCause": false
+                },
+                {
+                  "Number": 49,
+                  "Content": "          securityContext:",
+                  "IsCause": true,
+                  "Annotation": "",
+                  "Truncated": false,
+                  "Highlighted": "          \u001b[38;5;33msecurityContext\u001b[0m:",
+                  "FirstCause": false,
+                  "LastCause": false
+                },
+                {
+                  "Number": 50,
+                  "Content": "            allowPrivilegeEscalation: false",
+                  "IsCause": true,
+                  "Annotation": "",
+                  "Truncated": false,
+                  "Highlighted": "            \u001b[38;5;33mallowPrivilegeEscalation\u001b[0m: \u001b[38;5;166mfalse",
+                  "FirstCause": false,
+                  "LastCause": false
+                },
+                {
+                  "Number": 51,
+                  "Content": "            readOnlyRootFilesystem: true",
+                  "IsCause": true,
+                  "Annotation": "",
+                  "Truncated": false,
+                  "Highlighted": "\u001b[0m            \u001b[38;5;33mreadOnlyRootFilesystem\u001b[0m: \u001b[38;5;166mtrue",
+                  "FirstCause": false,
+                  "LastCause": false
+                },
+                {
+                  "Number": 52,
+                  "Content": "            capabilities: { drop: [\"ALL\"] }",
+                  "IsCause": true,
+                  "Annotation": "",
+                  "Truncated": false,
+                  "Highlighted": "\u001b[0m            \u001b[38;5;33mcapabilities\u001b[0m: { \u001b[38;5;33mdrop\u001b[0m: [\u001b[38;5;37m\"ALL\"\u001b[0m] }",
+                  "FirstCause": false,
+                  "LastCause": true
+                },
+                {
+                  "Number": 53,
+                  "Content": "",
+                  "IsCause": false,
+                  "Annotation": "",
+                  "Truncated": true,
+                  "FirstCause": false,
+                  "LastCause": false
+                }
+              ]
+            }
+          }
+        },
+        {
+          "Type": "Kubernetes Security Check",
+          "ID": "KSV-0125",
+          "Title": "Restrict container images to trusted registries",
+          "Description": "Ensure that all containers use images only from trusted registry domains.",
+          "Message": "Container verify in deployment my-app (namespace: my-app) uses an image from an untrusted registry.",
+          "Namespace": "builtin.kubernetes.KSV0125",
+          "Query": "data.builtin.kubernetes.KSV0125.deny",
+          "Resolution": "Use images from trusted registries.",
+          "Severity": "MEDIUM",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/ksv-0125",
+          "References": [
+            "https://cloud.google.com/container-registry/docs/overview#registries",
+            "https://docs.aws.amazon.com/general/latest/gr/ecr.html",
+            "https://avd.aquasec.com/misconfig/ksv-0125"
+          ],
+          "Status": "FAIL",
+          "CauseMetadata": {
+            "Provider": "Kubernetes",
+            "Service": "general",
+            "StartLine": 23,
+            "EndLine": 42,
+            "Code": {
+              "Lines": [
+                {
+                  "Number": 23,
+                  "Content": "        - name: verify",
+                  "IsCause": true,
+                  "Annotation": "",
+                  "Truncated": false,
+                  "Highlighted": "        - \u001b[38;5;33mname\u001b[0m: verify",
+                  "FirstCause": true,
+                  "LastCause": false
+                },
+                {
+                  "Number": 24,
+                  "Content": "          image: fabiocicerchia/cosign-verify-init:2.5.3",
+                  "IsCause": true,
+                  "Annotation": "",
+                  "Truncated": false,
+                  "Highlighted": "          \u001b[38;5;33mimage\u001b[0m: fabiocicerchia/cosign-verify-init:2.5.3",
+                  "FirstCause": false,
+                  "LastCause": false
+                },
+                {
+                  "Number": 25,
+                  "Content": "          imagePullPolicy: Always",
+                  "IsCause": true,
+                  "Annotation": "",
+                  "Truncated": false,
+                  "Highlighted": "          \u001b[38;5;33mimagePullPolicy\u001b[0m: Always",
+                  "FirstCause": false,
+                  "LastCause": false
+                },
+                {
+                  "Number": 26,
+                  "Content": "          env:",
+                  "IsCause": true,
+                  "Annotation": "",
+                  "Truncated": false,
+                  "Highlighted": "          \u001b[38;5;33menv\u001b[0m:",
+                  "FirstCause": false,
+                  "LastCause": false
+                },
+                {
+                  "Number": 27,
+                  "Content": "            - name: VERIFY_IMAGES",
+                  "IsCause": true,
+                  "Annotation": "",
+                  "Truncated": false,
+                  "Highlighted": "            - \u001b[38;5;33mname\u001b[0m: VERIFY_IMAGES",
+                  "FirstCause": false,
+                  "LastCause": false
+                },
+                {
+                  "Number": 28,
+                  "Content": "              value: \"registry.example.com/my-app:1.4.2\"",
+                  "IsCause": true,
+                  "Annotation": "",
+                  "Truncated": false,
+                  "Highlighted": "              \u001b[38;5;33mvalue\u001b[0m: \u001b[38;5;37m\"registry.example.com/my-app:1.4.2\"",
+                  "FirstCause": false,
+                  "LastCause": false
+                },
+                {
+                  "Number": 29,
+                  "Content": "            # readOnlyRootFilesystem is on, so send cosign's cache and the",
+                  "IsCause": true,
+                  "Annotation": "",
+                  "Truncated": false,
+                  "Highlighted": "\u001b[0m            \u001b[38;5;239m# readOnlyRootFilesystem is on, so send cosign's cache and the",
+                  "FirstCause": false,
+                  "LastCause": false
+                },
+                {
+                  "Number": 30,
+                  "Content": "            # script's scratch files to the writable /tmp emptyDir below.",
+                  "IsCause": true,
+                  "Annotation": "",
+                  "Truncated": false,
+                  "Highlighted": "\u001b[0m            \u001b[38;5;239m# script's scratch files to the writable /tmp emptyDir below.",
+                  "FirstCause": false,
+                  "LastCause": false
+                },
+                {
+                  "Number": 31,
+                  "Content": "            - name: HOME",
+                  "IsCause": true,
+                  "Annotation": "",
+                  "Truncated": false,
+                  "Highlighted": "\u001b[0m            - \u001b[38;5;33mname\u001b[0m: HOME",
+                  "FirstCause": false,
+                  "LastCause": true
+                },
+                {
+                  "Number": 32,
+                  "Content": "",
+                  "IsCause": false,
+                  "Annotation": "",
+                  "Truncated": true,
+                  "FirstCause": false,
+                  "LastCause": false
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "blocking": false,
+      "duration": 1.675
+    },
+    {
+      "name": "well_architected",
+      "outcome": "warn",
+      "score": 0.8,
+      "summary": "well_architected: skill not embedded (well-architected) \u2014 skipped",
+      "findings": [],
+      "blocking": false,
+      "duration": 0.0
+    }
+  ]
+}

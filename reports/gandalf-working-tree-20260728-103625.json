@@ -1,0 +1,650 @@
+{
+  "scope": "working-tree",
+  "generated_at": "2026-07-28 08:36:25 UTC",
+  "commit": {
+    "sha": "ee5bb032f8b02e473a1d9a137a6234c2b27cdeab",
+    "short": "ee5bb03",
+    "subject": "fix: bump curl to 8.21.0-r0 for alpine 3.24",
+    "date": "2026-07-17T20:36:27+02:00"
+  },
+  "languages": [
+    "docker",
+    "python",
+    "shell",
+    "yaml"
+  ],
+  "verdict": "fail",
+  "passed": false,
+  "policy": {
+    "fail_on": "fail",
+    "min_score": 0,
+    "reason": "a gate failed"
+  },
+  "score": 78,
+  "summary": "(LLM summary skipped)",
+  "changeset": "",
+  "remediation": "",
+  "improvement": "",
+  "skipped_gates": [
+    "cargo_audit",
+    "cargo_build",
+    "cargo_test",
+    "clippy",
+    "eslint",
+    "go_build",
+    "go_test",
+    "golangci_lint",
+    "govulncheck",
+    "node_test",
+    "sqlfluff",
+    "squawk",
+    "tsc"
+  ],
+  "disabled_gates": [],
+  "fixes": [],
+  "gates": [
+    {
+      "name": "bandit",
+      "outcome": "pass",
+      "score": 1.0,
+      "summary": "bandit: clean",
+      "findings": [],
+      "blocking": false,
+      "duration": 0.318
+    },
+    {
+      "name": "build",
+      "outcome": "pass",
+      "score": 1.0,
+      "summary": "no Python files",
+      "findings": [],
+      "blocking": true,
+      "duration": 0.0
+    },
+    {
+      "name": "ci_act",
+      "outcome": "warn",
+      "score": 0.5,
+      "summary": "'act' not found; CI not verified locally",
+      "findings": [],
+      "blocking": false,
+      "duration": 0.0
+    },
+    {
+      "name": "codebase_architecture",
+      "outcome": "pass",
+      "score": 1.0,
+      "summary": "100/100 \u00b7 clean",
+      "findings": [
+        {
+          "judge_summary": "The change adds documentation and funding metadata only, introducing no new modules or affecting existing interfaces, seams, or testability."
+        }
+      ],
+      "blocking": false,
+      "duration": 0.127
+    },
+    {
+      "name": "codeql",
+      "outcome": "warn",
+      "score": 0.8,
+      "summary": "codeql: no database analyzed (build/query-pack unavailable) \u2014 skipped",
+      "findings": [],
+      "blocking": false,
+      "duration": 610.42
+    },
+    {
+      "name": "compliance",
+      "outcome": "warn",
+      "score": 1.0,
+      "summary": "compliance: no request/diff to judge (pass --title/--body)",
+      "findings": [],
+      "blocking": false,
+      "duration": 0.0
+    },
+    {
+      "name": "atheris",
+      "outcome": "warn",
+      "score": 0.8,
+      "summary": "atheris: no fuzz harness at tests/fuzz/fuzz_adapters.py",
+      "findings": [],
+      "blocking": false,
+      "duration": 0.0
+    },
+    {
+      "name": "dalfox",
+      "outcome": "warn",
+      "score": 0.8,
+      "summary": "dalfox: no target URL \u2014 skipped (pass --target)",
+      "findings": [],
+      "blocking": false,
+      "duration": 0.0
+    },
+    {
+      "name": "nikto",
+      "outcome": "warn",
+      "score": 0.8,
+      "summary": "nikto: no target URL \u2014 skipped (pass --target)",
+      "findings": [],
+      "blocking": false,
+      "duration": 0.0
+    },
+    {
+      "name": "sqlmap",
+      "outcome": "warn",
+      "score": 0.8,
+      "summary": "sqlmap: no target URL \u2014 skipped (pass --target)",
+      "findings": [],
+      "blocking": false,
+      "duration": 0.0
+    },
+    {
+      "name": "grill_me",
+      "outcome": "warn",
+      "score": 0.6,
+      "summary": "grill_me: judge unavailable (HTTP Error 502: Bad Gateway) \u2014 skipped",
+      "findings": [],
+      "blocking": false,
+      "duration": 23.369
+    },
+    {
+      "name": "interrogate",
+      "outcome": "pass",
+      "score": 1.0,
+      "summary": "interrogate: no Python to document",
+      "findings": [],
+      "blocking": false,
+      "duration": 0.178
+    },
+    {
+      "name": "kics",
+      "outcome": "warn",
+      "score": 1.0,
+      "summary": "kics: 0 HIGH, 0 MEDIUM, 17 LOW",
+      "findings": [
+        {
+          "file": "manifests/example-deployment.yaml",
+          "line": 11,
+          "message": "[LOW] Deployment Without PodDisruptionBudget"
+        },
+        {
+          "file": "manifests/example-deployment.yaml",
+          "line": 24,
+          "message": "[LOW] Image Without Digest"
+        },
+        {
+          "file": "manifests/example-deployment.yaml",
+          "line": 45,
+          "message": "[LOW] Image Without Digest"
+        },
+        {
+          "file": "manifests/example-deployment.yaml",
+          "line": 13,
+          "message": "[LOW] Missing AppArmor Profile"
+        },
+        {
+          "file": "manifests/example-deployment.yaml",
+          "line": 13,
+          "message": "[LOW] Missing AppArmor Profile"
+        },
+        {
+          "file": "manifests/example-deployment.yaml",
+          "line": 7,
+          "message": "[LOW] Pod or Container Without LimitRange"
+        },
+        {
+          "file": "manifests/example-deployment.yaml",
+          "line": 7,
+          "message": "[LOW] Pod or Container Without ResourceQuota"
+        },
+        {
+          "file": ".github/workflows/security.yml",
+          "line": 45,
+          "message": "[LOW] Unpinned Actions Full Length Commit SHA"
+        },
+        {
+          "file": ".github/workflows/security.yml",
+          "line": 24,
+          "message": "[LOW] Unpinned Actions Full Length Commit SHA"
+        },
+        {
+          "file": ".github/workflows/release.yml",
+          "line": 31,
+          "message": "[LOW] Unpinned Actions Full Length Commit SHA"
+        },
+        {
+          "file": ".github/workflows/code-quality.yml",
+          "line": 23,
+          "message": "[LOW] Unpinned Actions Full Length Commit SHA"
+        },
+        {
+          "file": ".github/workflows/scorecard.yml",
+          "line": 34,
+          "message": "[LOW] Unpinned Actions Full Length Commit SHA"
+        },
+        {
+          "file": ".github/workflows/security.yml",
+          "line": 37,
+          "message": "[LOW] Unpinned Actions Full Length Commit SHA"
+        },
+        {
+          "file": ".github/workflows/code-quality.yml",
+          "line": 27,
+          "message": "[LOW] Unpinned Actions Full Length Commit SHA"
+        },
+        {
+          "file": ".github/workflows/code-quality.yml",
+          "line": 35,
+          "message": "[LOW] Unpinned Actions Full Length Commit SHA"
+        },
+        {
+          "file": ".github/workflows/code-quality.yml",
+          "line": 19,
+          "message": "[LOW] Unpinned Actions Full Length Commit SHA"
+        },
+        {
+          "file": ".github/workflows/scorecard.yml",
+          "line": 29,
+          "message": "[LOW] Unpinned Actions Full Length Commit SHA"
+        },
+        {
+          "file": "manifests/example-deployment.yaml",
+          "line": 7,
+          "message": "[INFO] Ensure Administrative Boundaries Between Resources"
+        }
+      ],
+      "blocking": false,
+      "duration": 2.26
+    },
+    {
+      "name": "licenses",
+      "outcome": "warn",
+      "score": 0.8,
+      "summary": "licenses: trivy unavailable (no host binary or gandalf-tools image) \u2014 skipped",
+      "findings": [],
+      "blocking": false,
+      "duration": 0.016
+    },
+    {
+      "name": "lizard",
+      "outcome": "warn",
+      "score": 0.8,
+      "summary": "lizard unavailable (no host binary or gandalf-tools image) \u2014 skipped",
+      "findings": [],
+      "blocking": false,
+      "duration": 0.0
+    },
+    {
+      "name": "mdl",
+      "outcome": "warn",
+      "score": 0.8,
+      "summary": "mdl unavailable (no host binary or gandalf-tools image) \u2014 skipped",
+      "findings": [],
+      "blocking": false,
+      "duration": 0.029
+    },
+    {
+      "name": "actionlint",
+      "outcome": "warn",
+      "score": 0.8,
+      "summary": "actionlint unavailable (no host binary or gandalf-tools image) \u2014 skipped",
+      "findings": [],
+      "blocking": false,
+      "duration": 0.0
+    },
+    {
+      "name": "codespell",
+      "outcome": "warn",
+      "score": 0.8,
+      "summary": "codespell unavailable (no host binary or gandalf-tools image) \u2014 skipped",
+      "findings": [],
+      "blocking": false,
+      "duration": 0.0
+    },
+    {
+      "name": "shellcheck",
+      "outcome": "warn",
+      "score": 0.8,
+      "summary": "shellcheck unavailable (no host binary or gandalf-tools image) \u2014 skipped",
+      "findings": [],
+      "blocking": false,
+      "duration": 0.0
+    },
+    {
+      "name": "yamllint",
+      "outcome": "pass",
+      "score": 1.0,
+      "summary": "yamllint: 14 file(s) clean",
+      "findings": [],
+      "blocking": false,
+      "duration": 0.238
+    },
+    {
+      "name": "format",
+      "outcome": "pass",
+      "score": 1.0,
+      "summary": "format: all files formatted",
+      "findings": [],
+      "blocking": false,
+      "duration": 0.066
+    },
+    {
+      "name": "mypy",
+      "outcome": "pass",
+      "score": 1.0,
+      "summary": "mypy: no type errors",
+      "findings": [],
+      "blocking": false,
+      "duration": 0.205
+    },
+    {
+      "name": "vulture",
+      "outcome": "warn",
+      "score": 0.8,
+      "summary": "vulture unavailable (no host binary or gandalf-tools image) \u2014 skipped",
+      "findings": [],
+      "blocking": false,
+      "duration": 0.0
+    },
+    {
+      "name": "ruff",
+      "outcome": "pass",
+      "score": 1.0,
+      "summary": "ruff clean",
+      "findings": [],
+      "blocking": false,
+      "duration": 0.061
+    },
+    {
+      "name": "scorecard",
+      "outcome": "warn",
+      "score": 0.8,
+      "summary": "scorecard unavailable (no host binary or gandalf-tools image) \u2014 skipped",
+      "findings": [],
+      "blocking": false,
+      "duration": 0.0
+    },
+    {
+      "name": "gitleaks",
+      "outcome": "warn",
+      "score": 0.8,
+      "summary": "gitleaks unavailable (no host binary or gandalf-tools image) \u2014 skipped",
+      "findings": [],
+      "blocking": true,
+      "duration": 0.0
+    },
+    {
+      "name": "semgrep",
+      "outcome": "fail",
+      "score": 0.0,
+      "summary": "semgrep: 11 finding(s)",
+      "findings": [
+        {
+          "path": ".github/workflows/code-quality.yml",
+          "line": 19,
+          "check_id": "yaml.github-actions.security.github-actions-mutable-action-tag.github-actions-mutable-action-tag",
+          "message": "GitHub Actions step uses a mutable tag or branch reference. Tags and branch names can be silently repointed by the action owner, enabling supply-chain attacks \u2014 as seen in the trivy-action and kics-github-action compromises. Pin the reference to a full 40-character commit SHA instead, e.g. `uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608`."
+        },
+        {
+          "path": ".github/workflows/code-quality.yml",
+          "line": 23,
+          "check_id": "yaml.github-actions.security.github-actions-mutable-action-tag.github-actions-mutable-action-tag",
+          "message": "GitHub Actions step uses a mutable tag or branch reference. Tags and branch names can be silently repointed by the action owner, enabling supply-chain attacks \u2014 as seen in the trivy-action and kics-github-action compromises. Pin the reference to a full 40-character commit SHA instead, e.g. `uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608`."
+        },
+        {
+          "path": ".github/workflows/code-quality.yml",
+          "line": 27,
+          "check_id": "yaml.github-actions.security.github-actions-mutable-action-tag.github-actions-mutable-action-tag",
+          "message": "GitHub Actions step uses a mutable tag or branch reference. Tags and branch names can be silently repointed by the action owner, enabling supply-chain attacks \u2014 as seen in the trivy-action and kics-github-action compromises. Pin the reference to a full 40-character commit SHA instead, e.g. `uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608`."
+        },
+        {
+          "path": ".github/workflows/code-quality.yml",
+          "line": 35,
+          "check_id": "yaml.github-actions.security.github-actions-mutable-action-tag.github-actions-mutable-action-tag",
+          "message": "GitHub Actions step uses a mutable tag or branch reference. Tags and branch names can be silently repointed by the action owner, enabling supply-chain attacks \u2014 as seen in the trivy-action and kics-github-action compromises. Pin the reference to a full 40-character commit SHA instead, e.g. `uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608`."
+        },
+        {
+          "path": ".github/workflows/dependency-review.yml",
+          "line": 20,
+          "check_id": "yaml.github-actions.security.github-actions-mutable-action-tag.github-actions-mutable-action-tag",
+          "message": "GitHub Actions step uses a mutable tag or branch reference. Tags and branch names can be silently repointed by the action owner, enabling supply-chain attacks \u2014 as seen in the trivy-action and kics-github-action compromises. Pin the reference to a full 40-character commit SHA instead, e.g. `uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608`."
+        },
+        {
+          "path": ".github/workflows/release.yml",
+          "line": 31,
+          "check_id": "yaml.github-actions.security.github-actions-mutable-action-tag.github-actions-mutable-action-tag",
+          "message": "GitHub Actions step uses a mutable tag or branch reference. Tags and branch names can be silently repointed by the action owner, enabling supply-chain attacks \u2014 as seen in the trivy-action and kics-github-action compromises. Pin the reference to a full 40-character commit SHA instead, e.g. `uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608`."
+        },
+        {
+          "path": ".github/workflows/scorecard.yml",
+          "line": 29,
+          "check_id": "yaml.github-actions.security.github-actions-mutable-action-tag.github-actions-mutable-action-tag",
+          "message": "GitHub Actions step uses a mutable tag or branch reference. Tags and branch names can be silently repointed by the action owner, enabling supply-chain attacks \u2014 as seen in the trivy-action and kics-github-action compromises. Pin the reference to a full 40-character commit SHA instead, e.g. `uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608`."
+        },
+        {
+          "path": ".github/workflows/scorecard.yml",
+          "line": 34,
+          "check_id": "yaml.github-actions.security.github-actions-mutable-action-tag.github-actions-mutable-action-tag",
+          "message": "GitHub Actions step uses a mutable tag or branch reference. Tags and branch names can be silently repointed by the action owner, enabling supply-chain attacks \u2014 as seen in the trivy-action and kics-github-action compromises. Pin the reference to a full 40-character commit SHA instead, e.g. `uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608`."
+        },
+        {
+          "path": ".github/workflows/security.yml",
+          "line": 24,
+          "check_id": "yaml.github-actions.security.github-actions-mutable-action-tag.github-actions-mutable-action-tag",
+          "message": "GitHub Actions step uses a mutable tag or branch reference. Tags and branch names can be silently repointed by the action owner, enabling supply-chain attacks \u2014 as seen in the trivy-action and kics-github-action compromises. Pin the reference to a full 40-character commit SHA instead, e.g. `uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608`."
+        },
+        {
+          "path": ".github/workflows/security.yml",
+          "line": 37,
+          "check_id": "yaml.github-actions.security.github-actions-mutable-action-tag.github-actions-mutable-action-tag",
+          "message": "GitHub Actions step uses a mutable tag or branch reference. Tags and branch names can be silently repointed by the action owner, enabling supply-chain attacks \u2014 as seen in the trivy-action and kics-github-action compromises. Pin the reference to a full 40-character commit SHA instead, e.g. `uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608`."
+        },
+        {
+          "path": ".github/workflows/security.yml",
+          "line": 45,
+          "check_id": "yaml.github-actions.security.github-actions-mutable-action-tag.github-actions-mutable-action-tag",
+          "message": "GitHub Actions step uses a mutable tag or branch reference. Tags and branch names can be silently repointed by the action owner, enabling supply-chain attacks \u2014 as seen in the trivy-action and kics-github-action compromises. Pin the reference to a full 40-character commit SHA instead, e.g. `uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608`."
+        }
+      ],
+      "blocking": false,
+      "duration": 21.258
+    },
+    {
+      "name": "pr_code_summary",
+      "outcome": "warn",
+      "score": 0.8,
+      "summary": "pr_code_summary: skill judge unavailable (HTTP Error 502: Bad Gateway) \u2014 skipped",
+      "findings": [],
+      "blocking": false,
+      "duration": 23.258
+    },
+    {
+      "name": "quality_gate_review",
+      "outcome": "pass",
+      "score": 0.8,
+      "summary": "GO \u2013 documentation and project hygiene are solid, overall score 80.",
+      "findings": [],
+      "blocking": true,
+      "duration": 0.866
+    },
+    {
+      "name": "ruthless_refactor",
+      "outcome": "warn",
+      "score": 0.73,
+      "summary": "The repository is fairly compact but contains several redundant CI/workflow files and unused helper scripts that can be trimmed without affecting functionality.",
+      "findings": [
+        {
+          "finding": "GitHub workflow .github/workflows/ci.yml duplicates steps present in .github/workflows/code-quality.yml \u2013 can consolidate."
+        },
+        {
+          "finding": "install.sh merely wraps a curl command already documented in README \u2013 could be removed or inlined."
+        },
+        {
+          "finding": "examples/ directory includes multiple README files that are not used by the container runtime \u2013 can be pruned."
+        },
+        {
+          "finding": ".env.example is never referenced by the code \u2013 dead configuration file."
+        },
+        {
+          "finding": "Multiple CI badge URLs in README duplicate the same status \u2013 unnecessary markup."
+        },
+        {
+          "finding": "docs/requirements.txt lists dependencies already declared in Dockerfile \u2013 redundant."
+        },
+        {
+          "finding": "Makefile contains targets (e.g., release) that are not used in CI \u2013 dead build scripts."
+        }
+      ],
+      "blocking": false,
+      "duration": 0.769
+    },
+    {
+      "name": "security_assessment",
+      "outcome": "warn",
+      "score": 0.55,
+      "summary": "The project shows good CI coverage and dependency management, but lacks critical hardening such as branch protection, SBOM generation, image signing, and a documented incident response plan.",
+      "findings": [
+        {
+          "finding": "Missing branch protection configuration (no .github/branch-protection.yml or similar)."
+        },
+        {
+          "finding": "Commit signing not enforced (no GPG signature requirement)."
+        },
+        {
+          "finding": "No automated SBOM generation for releases (no sbom workflow or tooling)."
+        },
+        {
+          "finding": "Docker images are not signed (release workflow lacks cosign or Notary signing step)."
+        },
+        {
+          "finding": "SECURITY.md does not contain a detailed incident response plan."
+        },
+        {
+          "finding": "No explicit compliance statements for GDPR, Cyber Resilience Act, or NIS2."
+        },
+        {
+          "finding": "Release workflow (release.yml) does not enforce signed artifacts."
+        },
+        {
+          "finding": "No required reviewer count defined for pull\u2011request approvals (no CODEOWNERS or branch rules)."
+        },
+        {
+          "finding": "Documentation lacks reference to 12\u2011Factor App principles for secure development."
+        },
+        {
+          "finding": "Security testing limited to static analysis; no fuzzing or runtime security checks."
+        },
+        {
+          "finding": "Dependabot configuration present but no evidence of automated vulnerability remediation beyond PRs."
+        },
+        {
+          "finding": "No clear policy for handling security disclosures beyond linking to SECURITY.md."
+        }
+      ],
+      "blocking": false,
+      "duration": 2.161
+    },
+    {
+      "name": "checkov",
+      "outcome": "warn",
+      "score": 0.8,
+      "summary": "checkov unavailable (no host binary or gandalf-tools image) \u2014 skipped",
+      "findings": [],
+      "blocking": false,
+      "duration": 0.0
+    },
+    {
+      "name": "hadolint",
+      "outcome": "warn",
+      "score": 0.8,
+      "summary": "hadolint unavailable (no host binary or gandalf-tools image) \u2014 skipped",
+      "findings": [],
+      "blocking": false,
+      "duration": 0.0
+    },
+    {
+      "name": "osv",
+      "outcome": "warn",
+      "score": 0.8,
+      "summary": "pip-audit unavailable (no host binary or gandalf-tools image) \u2014 skipped",
+      "findings": [],
+      "blocking": false,
+      "duration": 0.0
+    },
+    {
+      "name": "osv_scanner",
+      "outcome": "warn",
+      "score": 0.8,
+      "summary": "osv-scanner unavailable (no host binary or gandalf-tools image) \u2014 skipped",
+      "findings": [],
+      "blocking": false,
+      "duration": 0.0
+    },
+    {
+      "name": "tests",
+      "outcome": "fail",
+      "score": 0.0,
+      "summary": "tests: ? failure(s) \u2014 no tests ran in 0.01s",
+      "findings": [],
+      "blocking": false,
+      "duration": 0.434
+    },
+    {
+      "name": "trivy",
+      "outcome": "warn",
+      "score": 0.8,
+      "summary": "trivy unavailable (no host binary or gandalf-tools image) \u2014 skipped",
+      "findings": [],
+      "blocking": false,
+      "duration": 0.001
+    },
+    {
+      "name": "well_architected",
+      "outcome": "warn",
+      "score": 0.35,
+      "summary": "35/100 \u00b7 6 risks",
+      "findings": [
+        {
+          "severity": "low",
+          "finding": "Operational Excellence \u2013 N/A",
+          "description": "No operational code, deployment scripts, or IaC are present; cannot assess automation, observability, or incident handling.",
+          "file": "README.md:1"
+        },
+        {
+          "severity": "low",
+          "finding": "Security \u2013 N/A",
+          "description": "No resources, IAM policies, or data handling logic are introduced; cannot evaluate identity, encryption, or access controls.",
+          "file": "README.md:1"
+        },
+        {
+          "severity": "low",
+          "finding": "Reliability \u2013 N/A",
+          "description": "The change does not provision any compute, storage, or networking resources; reliability aspects such as fault tolerance and recovery cannot be assessed.",
+          "file": "README.md:1"
+        },
+        {
+          "severity": "low",
+          "finding": "Performance Efficiency \u2013 N/A",
+          "description": "No compute or data services are defined; performance considerations like scaling, caching, or resource selection are not applicable.",
+          "file": "README.md:1"
+        },
+        {
+          "severity": "low",
+          "finding": "Cost Optimization \u2013 N/A",
+          "description": "No billable resources are introduced; cost\u2011related best practices cannot be evaluated.",
+          "file": "README.md:1"
+        },
+        {
+          "severity": "low",
+          "finding": "Sustainability \u2013 N/A",
+          "description": "Without infrastructure or workload definitions, sustainability impacts such as region choice or resource utilization cannot be assessed.",
+          "file": "README.md:1"
+        },
+        {
+          "judge_summary": "The change only adds documentation and a funding file, providing insufficient evidence to evaluate the Well\u2011Architected pillars."
+        }
+      ],
+      "blocking": false,
+      "duration": 2.063
+    }
+  ]
+}
