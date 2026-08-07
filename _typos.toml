@@ -1,0 +1,6 @@
+# Domain vocabulary the typos dictionary mistakes for misspellings.
+
+[files]
+# reports/ holds committed gandalf output: JSON full of hex fingerprints, where
+# `...caf12754...` and `...4ba7112e...` read as `calf` and `by`/`be`.
+extend-exclude = ["reports/"]
