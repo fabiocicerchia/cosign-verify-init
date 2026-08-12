@@ -4,7 +4,7 @@ name: dependency-review
 # known vulnerabilities or incompatible licenses. Uses GitHub's Dependency
 # Graph (on by default for public repos).
 #
-# ponytail: actions are tag-pinned to match the skeleton; SHA-pin via
+# ponytail: actions are tag-pinned here; SHA-pin via
 # `pinact run` for parity with ci.yml/release.yml.
 
 on: pull_request
