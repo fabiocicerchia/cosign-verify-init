@@ -2,7 +2,7 @@
 # main workload starts. Admission-controller guarantees without the controller.
 ARG COSIGN_VERSION=2.5.3
 
-FROM alpine:3.24 AS fetch
+FROM alpine:3.24@sha256:28bd5fe8b56d1bd048e5babf5b10710ebe0bae67db86916198a6eec434943f8b AS fetch
 ARG COSIGN_VERSION
 ARG TARGETARCH=amd64
 # ponytail: apk versions pinned for scanners; bump when alpine 3.24 patches them
@@ -11,7 +11,7 @@ RUN curl -fsSLo /cosign \
       "https://github.com/sigstore/cosign/releases/download/v${COSIGN_VERSION}/cosign-linux-${TARGETARCH}" \
  && chmod 0755 /cosign
 
-FROM alpine:3.24
+FROM alpine:3.24@sha256:28bd5fe8b56d1bd048e5babf5b10710ebe0bae67db86916198a6eec434943f8b
 ARG COSIGN_VERSION
 LABEL org.opencontainers.image.title="cosign-verify-init" \
       org.opencontainers.image.description="Init container verifying image signatures before the workload starts" \

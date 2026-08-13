@@ -1,6 +1,6 @@
 name: security
 
-# ponytail: actions are tag-pinned to match the skeleton; SHA-pin (like
+# ponytail: actions are tag-pinned here; SHA-pin (like
 # ci.yml/release.yml) via `pinact run` when network is available, for parity.
 
 on:

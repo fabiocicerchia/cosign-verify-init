@@ -4,7 +4,7 @@ name: scorecard
 # pinned deps, token permissions, etc.) and uploads results to the Security tab.
 # Public repos: results also appear at deps.dev / the Scorecard badge.
 #
-# ponytail: actions are tag-pinned to match the skeleton; SHA-pin via
+# ponytail: actions are tag-pinned here; SHA-pin via
 # `pinact run` for parity with ci.yml/release.yml.
 
 on:

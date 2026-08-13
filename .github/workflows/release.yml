@@ -7,7 +7,7 @@ name: release
 # triggered by that release event, so it also fires for releases cut outside
 # release-please.
 #
-# ponytail: release-please-action is tag-pinned to match the skeleton;
+# ponytail: release-please-action is tag-pinned here;
 # SHA-pin via `pinact run` for parity with the pinned steps below.
 
 on:
