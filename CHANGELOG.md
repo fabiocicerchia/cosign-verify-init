@@ -4,6 +4,13 @@ All notable changes to this project are documented here. The format is based
 on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.0](https://github.com/fabiocicerchia/cosign-verify-init/compare/v0.1.3...v0.2.0) (2026-08-25)
+
+
+### Features
+
+* **docs:** build the docs site in Actions and drop Read the Docs ([#34](https://github.com/fabiocicerchia/cosign-verify-init/issues/34)) ([14b3644](https://github.com/fabiocicerchia/cosign-verify-init/commit/14b36444f405cec2283e4b6c978845baa200cc4c))
+
 ## [0.1.3](https://github.com/fabiocicerchia/cosign-verify-init/compare/v0.1.2...v0.1.3) (2026-08-13)
 
 
