@@ -6,7 +6,7 @@ FROM alpine:3.24@sha256:28bd5fe8b56d1bd048e5babf5b10710ebe0bae67db86916198a6eec4
 ARG COSIGN_VERSION
 ARG TARGETARCH=amd64
 # ponytail: apk versions pinned for scanners; bump when alpine 3.24 patches them
-RUN apk add --no-cache curl=8.21.0-r0 ca-certificates=20260611-r0
+RUN apk add --no-cache curl=8.22.0-r0 ca-certificates=20260611-r0
 RUN curl -fsSLo /cosign \
       "https://github.com/sigstore/cosign/releases/download/v${COSIGN_VERSION}/cosign-linux-${TARGETARCH}" \
  && chmod 0755 /cosign
