@@ -8,11 +8,12 @@
 ## Key-based verification
 
 1. Create a secret from your cosign public key:
+
    ```sh
    kubectl create secret generic cosign-pub --from-file=cosign.pub=./cosign.pub
    ```
 
-2. Add the init container to your deployment (see `examples/basic/`).
+1. Add the init container to your deployment (see `examples/basic/`).
 
 ## Keyless (OIDC) verification
 
