@@ -54,13 +54,13 @@ env:
 
 ## Configuration
 
-| Variable | Purpose |
-|---|---|
-| `VERIFY_IMAGES` | space-separated image refs to verify (required) |
-| `COSIGN_KEY_PATH` | mounted public key (default `/keys/cosign.pub`) |
-| `COSIGN_PUBLIC_KEY` | inline PEM alternative |
-| `KEYLESS` + `CERT_IDENTITY` + `CERT_OIDC_ISSUER` | keyless mode |
-| `INSECURE_SKIP_TLOG` | skip Rekor check (air-gapped registries) |
+| Variable                                         | Purpose                                         |
+| ------------------------------------------------ | ----------------------------------------------- |
+| `VERIFY_IMAGES`                                  | space-separated image refs to verify (required) |
+| `COSIGN_KEY_PATH`                                | mounted public key (default `/keys/cosign.pub`) |
+| `COSIGN_PUBLIC_KEY`                              | inline PEM alternative                          |
+| `KEYLESS` + `CERT_IDENTITY` + `CERT_OIDC_ISSUER` | keyless mode                                    |
+| `INSECURE_SKIP_TLOG`                             | skip Rekor check (air-gapped registries)        |
 
 ## Honest caveat
 
