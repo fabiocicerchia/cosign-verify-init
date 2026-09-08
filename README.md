@@ -18,12 +18,6 @@ per-workload, incrementally adoptable.
 docker pull ghcr.io/fabiocicerchia/cosign-verify-init:latest
 ```
 
-Or use the install script:
-
-```sh
-curl -fsSL https://raw.githubusercontent.com/fabiocicerchia/cosign-verify-init/main/install.sh | bash
-```
-
 ## Usage
 
 ```yaml
