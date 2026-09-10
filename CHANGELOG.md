@@ -4,6 +4,13 @@ All notable changes to this project are documented here. The format is based
 on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.5](https://github.com/fabiocicerchia/cosign-verify-init/compare/v0.2.4...v0.2.5) (2026-09-10)
+
+
+### Bug Fixes
+
+* **coc:** restore the reporting address and the version deep-link ([#64](https://github.com/fabiocicerchia/cosign-verify-init/issues/64)) ([db24aa3](https://github.com/fabiocicerchia/cosign-verify-init/commit/db24aa3870a472522e768a03dc3d8855c35a8a92))
+
 ## [0.2.4](https://github.com/fabiocicerchia/cosign-verify-init/compare/v0.2.3...v0.2.4) (2026-09-10)
 
 
