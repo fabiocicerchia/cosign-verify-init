@@ -1,5 +1,5 @@
 IMAGE     ?= fabiocicerchia/cosign-verify-init
-VERSION   ?= 2.5.3
+VERSION   ?= 3.1.3
 PLATFORMS ?= linux/amd64,linux/arm64
 
 # Every verb this repository exposes lives here; `make` on its own prints them.

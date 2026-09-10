@@ -1,6 +1,14 @@
 # cosign-verify-init — init container verifying image signatures before the
 # main workload starts. Admission-controller guarantees without the controller.
-ARG COSIGN_VERSION=2.5.3
+#
+# cosign 3.x, and the major matters: 3.x writes signatures in the new bundle
+# format, tagged `sha256-<digest>` rather than `sha256-<digest>.sig`. A 2.x
+# verifier does not look there, so it reports `no signatures found` for a
+# correctly signed image — indistinguishable, from the outside, from an
+# unsigned one. This container is the thing that fails a workload closed, so it
+# must not be the older half of that pair. It still verifies 2.x signatures.
+# VERSION-BUMP
+ARG COSIGN_VERSION=3.1.3
 
 FROM alpine:3.24@sha256:28bd5fe8b56d1bd048e5babf5b10710ebe0bae67db86916198a6eec434943f8b AS fetch
 ARG COSIGN_VERSION

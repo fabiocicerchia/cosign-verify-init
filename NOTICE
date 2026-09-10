@@ -8,7 +8,7 @@ The Apache-2.0 license on this repository covers the packaging only: the
 Dockerfile and the verify-images script. The published container image
 redistributes one third-party binary verbatim:
 
-  cosign 2.5.3  Apache-2.0  https://github.com/sigstore/cosign
+  cosign 3.1.3  Apache-2.0  https://github.com/sigstore/cosign
 
 --------------------------------------------------------------------
 Cosign
