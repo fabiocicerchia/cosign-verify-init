@@ -12,6 +12,25 @@ main workload starts**. If the signature doesn't verify, the pod never runs.
 Supply-chain enforcement without installing an admission controller —
 per-workload, incrementally adoptable.
 
+## Features
+
+- Verifies image signatures with cosign **before the main workload starts** —
+  if the signature does not verify, the pod never runs.
+- Supply-chain enforcement **without an admission controller**: per-workload
+  and incrementally adoptable, one deployment at a time.
+- Key-based verification from a mounted public key (`COSIGN_KEY_PATH`) or an
+  inline PEM (`COSIGN_PUBLIC_KEY`).
+- Keyless OIDC verification via `KEYLESS`, `CERT_IDENTITY` and
+  `CERT_OIDC_ISSUER` — identity pinned to the workflow that published the
+  image.
+- Verifies several images in one pod: `VERIFY_IMAGES` takes a space-separated
+  list.
+- `INSECURE_SKIP_TLOG` skips the Rekor check for air-gapped registries.
+- Honest about its limits: an init container is a **speed bump, not a
+  boundary** — it cannot stop kubelet pulling the image, and a compromised
+  namespace admin can remove it. Use it where a policy controller is not an
+  option, or as defence in depth.
+
 ## Install
 
 ```sh
