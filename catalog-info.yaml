@@ -1,0 +1,23 @@
+# Backstage catalog entry, read by paved's scorecard plugin.
+#
+# Every check paved scores is derived from this file alone — no cluster
+# access, no CI credentials. What is absent here is absent from the score.
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: cosign-verify-init
+  description: >-
+      Kubernetes init container that verifies cosign image signatures before the main workload starts.
+      Supply-chain enforcement without an admission controller.
+  annotations:
+    github.com/project-slug: fabiocicerchia/cosign-verify-init
+    backstage.io/source-location: url:https://github.com/fabiocicerchia/cosign-verify-init/
+    backstage.io/techdocs-ref: dir:.
+  links:
+    - url: https://github.com/fabiocicerchia/cosign-verify-init
+      title: Source
+spec:
+  type: library
+  lifecycle: production
+  owner: group:default/kodebeat
+  system: oss-tools
