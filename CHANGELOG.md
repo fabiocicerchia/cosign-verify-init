@@ -4,6 +4,14 @@ All notable changes to this project are documented here. The format is based
 on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.7](https://github.com/fabiocicerchia/cosign-verify-init/compare/v0.2.6...v0.2.7) (2026-09-20)
+
+
+### Bug Fixes
+
+* **ci:** keep actions: read on the job that uploads sarif ([#81](https://github.com/fabiocicerchia/cosign-verify-init/issues/81)) ([8812868](https://github.com/fabiocicerchia/cosign-verify-init/commit/881286823aaab2269a77dd80ad2274440e5190f9))
+* **docker:** bump ca-certificates pin to 20260909-r0 ([#76](https://github.com/fabiocicerchia/cosign-verify-init/issues/76)) ([855a846](https://github.com/fabiocicerchia/cosign-verify-init/commit/855a84673ac561a4bd2ce1eac84c4b8e5e3b0671))
+
 ## [0.2.6](https://github.com/fabiocicerchia/cosign-verify-init/compare/v0.2.5...v0.2.6) (2026-09-11)
 
 
