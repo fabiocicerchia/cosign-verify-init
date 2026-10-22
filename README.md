@@ -44,7 +44,7 @@ initContainers:
   - name: verify
     image: fabiocicerchia/cosign-verify-init
     env:
-      - { name: VERIFY_IMAGES, value: "registry.example.com/my-app:1.4.2" }
+      - { name: VERIFY_IMAGES, value: "registry.example.com/my-app@sha256:0000000000000000000000000000000000000000000000000000000000000000" }
     volumeMounts:
       - { name: cosign-pub, mountPath: /keys, readOnly: true }
 ```
@@ -56,7 +56,7 @@ Keyless (GitHub Actions OIDC) verification:
 ```yaml
 env:
   - name: VERIFY_IMAGES
-    value: "ghcr.io/org/app:1.2.3"
+    value: "ghcr.io/org/app@sha256:0000000000000000000000000000000000000000000000000000000000000000"
   - name: KEYLESS
     value: "true"
   - name: CERT_IDENTITY
@@ -69,7 +69,7 @@ env:
 
 | Variable                                         | Purpose                                         |
 | ------------------------------------------------ | ----------------------------------------------- |
-| `VERIFY_IMAGES`                                  | space-separated image refs to verify (required) |
+| `VERIFY_IMAGES`                                  | `repo@sha256:<digest>` refs, space-separated    |
 | `COSIGN_KEY_PATH`                                | mounted public key (default `/keys/cosign.pub`) |
 | `COSIGN_PUBLIC_KEY`                              | inline PEM alternative                          |
 | `KEYLESS` + `CERT_IDENTITY` + `CERT_OIDC_ISSUER` | keyless mode                                    |
@@ -85,6 +85,15 @@ installing one isn't an option or as defense-in-depth.
 ## Development
 
 `make test` is the negative path: an unsigned image must fail.
+
+The zero digest in the examples is a placeholder to replace before deployment.
+Mutable tags are refused. Resolve each workload image to its immutable digest,
+then use that identical reference in both `VERIFY_IMAGES` and the workload's
+`image` field. An init container cannot inspect or enforce the relationship
+between arbitrary pod image fields: enforce that relationship through admission
+policy or your deployment generator. Signature verification of one digest does
+not authorise a different workload image. Run `sh test-validation.sh` for the
+offline reference-validation tests.
 
 ### Make targets
 

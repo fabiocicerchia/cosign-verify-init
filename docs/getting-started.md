@@ -13,6 +13,10 @@
    kubectl create secret generic cosign-pub --from-file=cosign.pub=./cosign.pub
    ```
 
+1. Pin the workload image and `VERIFY_IMAGES` to the same real `@sha256:` digest
+   (64 lowercase hexadecimal characters). Mutable tags are rejected. An init
+   container cannot enforce that the pod specification uses the same reference;
+   enforce that relationship with admission policy or your deployment generator.
 1. Add the init container to your deployment (see `examples/basic/`).
 
 ## Keyless (OIDC) verification

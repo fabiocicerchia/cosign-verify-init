@@ -13,6 +13,23 @@ set -eu
 
 : "${VERIFY_IMAGES:?VERIFY_IMAGES is required (space-separated image refs)}"
 
+for IMAGE in $VERIFY_IMAGES; do
+  case "$IMAGE" in
+    *@sha256:*)
+      DIGEST="${IMAGE##*@sha256:}"
+      REPOSITORY="${IMAGE%@sha256:*}"
+      case "$DIGEST" in
+        *[!0-9a-f]*|'') echo "cosign-verify-init: invalid sha256 digest: $IMAGE" >&2; exit 64 ;;
+      esac
+      [ "${#DIGEST}" -eq 64 ] && [ -n "$REPOSITORY" ] || {
+        echo "cosign-verify-init: expected repository@sha256:<64 lowercase hex characters>" >&2
+        exit 64
+      }
+      ;;
+    *) echo "cosign-verify-init: mutable image reference refused: $IMAGE; use repository@sha256:<digest>" >&2; exit 64 ;;
+  esac
+done
+
 FLAGS=""
 [ "${INSECURE_SKIP_TLOG:-false}" = "true" ] && FLAGS="$FLAGS --insecure-ignore-tlog=true"
 
@@ -33,7 +50,7 @@ fi
 for IMAGE in $VERIFY_IMAGES; do
   echo "cosign-verify-init: verifying $IMAGE"
   # shellcheck disable=SC2086
-  if cosign verify $FLAGS "$IMAGE" >/dev/null 2>/tmp/err; then
+  if cosign verify $FLAGS -- "$IMAGE" >/dev/null 2>/tmp/err; then
     echo "cosign-verify-init: OK $IMAGE"
   else
     echo "cosign-verify-init: FAILED $IMAGE" >&2

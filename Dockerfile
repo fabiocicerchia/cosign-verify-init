@@ -14,7 +14,7 @@ FROM alpine:3.24@sha256:294b683cb724975bec92580e1e685676bd4b50bda910ddb8c51d4cab
 ARG COSIGN_VERSION
 ARG TARGETARCH=amd64
 # ponytail: apk versions pinned for scanners; bump when alpine 3.24 patches them
-RUN apk add --no-cache curl=8.22.0-r0 ca-certificates=20260909-r0
+RUN apk add --no-cache curl=8.22.0-r0 ca-certificates=20261020-r0
 RUN curl -fsSLo /cosign \
       "https://github.com/sigstore/cosign/releases/download/v${COSIGN_VERSION}/cosign-linux-${TARGETARCH}" \
  && chmod 0755 /cosign
@@ -26,7 +26,7 @@ LABEL org.opencontainers.image.title="cosign-verify-init" \
       org.opencontainers.image.version="${COSIGN_VERSION}" \
       org.opencontainers.image.licenses="Apache-2.0" \
       org.opencontainers.image.source="https://github.com/fabiocicerchia/cosign-verify-init"
-RUN apk add --no-cache ca-certificates=20260909-r0 \
+RUN apk add --no-cache ca-certificates=20261020-r0 \
  && adduser -D -u 10001 verify
 COPY NOTICE /NOTICE
 COPY --from=fetch /cosign /usr/local/bin/cosign

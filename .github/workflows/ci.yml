@@ -23,7 +23,8 @@ jobs:
       - name: Dockerfile and shell
         run: |
           docker run --rm -i hadolint/hadolint < Dockerfile
-          shellcheck verify-images test.sh
+          shellcheck verify-images test.sh test-validation.sh
+          sh test-validation.sh
 
   test:
     # A github-actions bump touches workflow files only, never the code under test.
