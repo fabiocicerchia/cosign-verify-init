@@ -25,7 +25,7 @@ spec:
           imagePullPolicy: Always
           env:
             - name: VERIFY_IMAGES
-              value: "registry.example.com/my-app:1.4.2"
+              value: "registry.example.com/my-app@sha256:0000000000000000000000000000000000000000000000000000000000000000"
             # readOnlyRootFilesystem is on, so send cosign's cache and the
             # script's scratch files to the writable /tmp emptyDir below.
             - name: HOME
@@ -42,7 +42,7 @@ spec:
             - { name: tmp, mountPath: /tmp }
       containers:
         - name: app
-          image: registry.example.com/my-app:1.4.2
+          image: registry.example.com/my-app@sha256:0000000000000000000000000000000000000000000000000000000000000000
           imagePullPolicy: Always
           ports:
             - { name: http, containerPort: 8080 }

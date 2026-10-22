@@ -7,7 +7,9 @@ docker run --rm --entrypoint cosign "$IMAGE" version >/dev/null
 TMP="$(mktemp -d)"
 docker run --rm --entrypoint sh "$IMAGE" -c \
   'cd /tmp && COSIGN_PASSWORD= cosign generate-key-pair >/dev/null 2>&1 && cat cosign.pub' > "$TMP/cosign.pub"
-if docker run --rm -v "$TMP:/keys:ro" -e VERIFY_IMAGES=alpine:3.22 "$IMAGE" 2>/dev/null; then
+docker pull alpine:3.22 >/dev/null
+UNSIGNED="$(docker inspect --format '{{index .RepoDigests 0}}' alpine:3.22)"
+if docker run --rm -v "$TMP:/keys:ro" -e VERIFY_IMAGES="$UNSIGNED" "$IMAGE" 2>/dev/null; then
   echo "FAIL: unsigned image passed verification" >&2; rm -rf "$TMP"; exit 1
 fi
 rm -rf "$TMP"
