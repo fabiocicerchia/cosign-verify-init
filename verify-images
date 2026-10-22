@@ -50,7 +50,7 @@ fi
 for IMAGE in $VERIFY_IMAGES; do
   echo "cosign-verify-init: verifying $IMAGE"
   # shellcheck disable=SC2086
-  if cosign verify $FLAGS "$IMAGE" >/dev/null 2>/tmp/err; then
+  if cosign verify $FLAGS -- "$IMAGE" >/dev/null 2>/tmp/err; then
     echo "cosign-verify-init: OK $IMAGE"
   else
     echo "cosign-verify-init: FAILED $IMAGE" >&2

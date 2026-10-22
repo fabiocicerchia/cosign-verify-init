@@ -69,7 +69,7 @@ env:
 
 | Variable                                         | Purpose                                         |
 | ------------------------------------------------ | ----------------------------------------------- |
-| `VERIFY_IMAGES`                                  | space-separated immutable `repository@sha256:<64 lowercase hex characters>` refs (required) |
+| `VERIFY_IMAGES`                                  | `repo@sha256:<digest>` refs, space-separated    |
 | `COSIGN_KEY_PATH`                                | mounted public key (default `/keys/cosign.pub`) |
 | `COSIGN_PUBLIC_KEY`                              | inline PEM alternative                          |
 | `KEYLESS` + `CERT_IDENTITY` + `CERT_OIDC_ISSUER` | keyless mode                                    |
