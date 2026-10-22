@@ -5,6 +5,7 @@ set -eu
 IMAGE="${1:?usage: test.sh <image:tag>}"
 docker run --rm --entrypoint cosign "$IMAGE" version >/dev/null
 TMP="$(mktemp -d)"
+chmod 0755 "$TMP"  # the image runs as uid 10001; mktemp -d is 0700
 docker run --rm --entrypoint sh "$IMAGE" -c \
   'cd /tmp && COSIGN_PASSWORD= cosign generate-key-pair >/dev/null 2>&1 && cat cosign.pub' > "$TMP/cosign.pub"
 docker pull alpine:3.22 >/dev/null
