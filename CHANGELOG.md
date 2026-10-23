@@ -4,6 +4,17 @@ All notable changes to this project are documented here. The format is based
 on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.0](https://github.com/fabiocicerchia/cosign-verify-init/compare/v0.2.7...v1.0.0) (2026-10-23)
+
+
+### ⚠ BREAKING CHANGES
+
+* VERIFY_IMAGES entries must be digest references (repo@sha256:<64 lowercase hex>, optionally repo:tag@sha256:...). Tag-only references are refused with exit 64. Pin the verifier and every image it checks by digest before upgrading.
+
+### Bug Fixes
+
+* require immutable image digests for verification ([#90](https://github.com/fabiocicerchia/cosign-verify-init/issues/90)) ([db4150e](https://github.com/fabiocicerchia/cosign-verify-init/commit/db4150e17da5c7fe3911bb340380eaa796dddba4))
+
 ## [0.2.7](https://github.com/fabiocicerchia/cosign-verify-init/compare/v0.2.6...v0.2.7) (2026-09-20)
 
 
