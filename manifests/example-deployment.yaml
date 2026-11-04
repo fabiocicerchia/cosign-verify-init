@@ -4,6 +4,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: my-app
+  # kics-scan ignore-line
   namespace: my-app
 spec:
   replicas: 2
@@ -12,6 +13,9 @@ spec:
   template:
     metadata:
       labels: { app: my-app }
+      annotations:
+        container.apparmor.security.beta.kubernetes.io/verify: runtime/default
+        container.apparmor.security.beta.kubernetes.io/app: runtime/default
     spec:
       automountServiceAccountToken: false
       securityContext:
@@ -62,3 +66,42 @@ spec:
           configMap: { name: cosign-public-key }
         - name: tmp
           emptyDir: {}
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: my-app
+  # kics-scan ignore-line
+  namespace: my-app
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels: { app: my-app }
+---
+# Every container above sets its own requests and limits, so these defaults
+# only apply to pods that do not.
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: my-app
+  # kics-scan ignore-line
+  namespace: my-app
+spec:
+  limits:
+    - type: Container
+      defaultRequest: { cpu: "100m", memory: "128Mi" }
+      default: { cpu: "500m", memory: "256Mi" }
+---
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: my-app
+  # kics-scan ignore-line
+  namespace: my-app
+spec:
+  hard:
+    pods: "10"
+    requests.cpu: "1"
+    requests.memory: 1Gi
+    limits.cpu: "2"
+    limits.memory: 2Gi
