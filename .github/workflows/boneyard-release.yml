@@ -39,6 +39,9 @@ jobs:
           skip-unchanged: "false"
 
       - name: Post to boneyard
+        # Telemetry, not a gate. Dependabot and fork pull requests get no
+        # BONEYARD_TOKEN, and an app.boneyard.run outage is not this change's
+        # fault. Drop this once the token reaches every PR and posting gates.
         continue-on-error: true
         env:
           TOKEN: ${{ secrets.BONEYARD_TOKEN }}
