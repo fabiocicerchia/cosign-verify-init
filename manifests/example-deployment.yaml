@@ -63,7 +63,7 @@ spec:
             httpGet: { path: /healthz, port: http }
       volumes:
         - name: cosign-pub
-          configMap: { name: cosign-public-key }
+          secret: { secretName: cosign-pub }
         - name: tmp
           emptyDir: {}
 ---
