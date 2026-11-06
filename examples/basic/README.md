@@ -13,7 +13,7 @@ See the Kubernetes manifest in `../../manifests/` for a full deployment example.
 1. Create a secret from your public key:
 
    ```sh
-   kubectl create secret generic cosign-pub --from-file=cosign.pub=./cosign.pub
+   kubectl create secret generic cosign-pub --namespace my-app --from-file=cosign.pub=./cosign.pub
    ```
 
 1. Replace both placeholder digests in the example manifest with the same real

@@ -10,7 +10,7 @@
 1. Create a secret from your cosign public key:
 
    ```sh
-   kubectl create secret generic cosign-pub --from-file=cosign.pub=./cosign.pub
+   kubectl create secret generic cosign-pub --namespace my-app --from-file=cosign.pub=./cosign.pub
    ```
 
 1. Pin the workload image and `VERIFY_IMAGES` to the same real `@sha256:` digest
