@@ -54,6 +54,8 @@ jobs:
       - name: Run gandalf
         # A red verdict is the run most worth recording, so it must not stop the
         # POST below. gandalf-pr-review.yml is where findings gate a change.
+        # Drop this once the POST runs under `if: ${{ !cancelled() }}` and a red
+        # verdict on main is meant to turn this workflow red.
         continue-on-error: true
         env:
           IMAGE: ghcr.io/fabiocicerchia/gandalf-tools:0.14.0
@@ -67,7 +69,9 @@ jobs:
               && PYTHONPATH=/gandalf/src python -m gandalf --no-llm --no-html --out-dir reports'
 
       - name: Post to proofhouse
-        # Telemetry. A dashboard being down is not this repository's problem.
+        # Telemetry. A dashboard being down is not this repository's problem,
+        # and neither is a missing PROOFHOUSE_TOKEN. Drop this once proofhouse
+        # is something this repository is meant to gate on.
         continue-on-error: true
         env:
           TOKEN: ${{ secrets.PROOFHOUSE_TOKEN }}
