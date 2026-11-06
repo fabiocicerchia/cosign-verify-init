@@ -43,6 +43,9 @@ jobs:
           github-token: ${{ github.token }}
 
       - name: Post to boneyard
+        # Telemetry, not a gate: an app.boneyard.run outage or a missing
+        # BONEYARD_TOKEN should not turn main or the weekly run red. Drop this
+        # once boneyard is something this repository is meant to gate on.
         continue-on-error: true
         env:
           TOKEN: ${{ secrets.BONEYARD_TOKEN }}
