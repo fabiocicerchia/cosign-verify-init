@@ -4,6 +4,15 @@ All notable changes to this project are documented here. The format is based
 on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.1](https://github.com/fabiocicerchia/cosign-verify-init/compare/v1.0.0...v1.0.1) (2026-11-06)
+
+
+### Bug Fixes
+
+* 3 issues found by code-atlas (quality gates) ([#99](https://github.com/fabiocicerchia/cosign-verify-init/issues/99)) ([7129e29](https://github.com/fabiocicerchia/cosign-verify-init/commit/7129e29aa79bc570fc9cdfef71d1f28e0e65ab44))
+* Setup steps create a Secret; the manifest mounts a ConfigMap ([#103](https://github.com/fabiocicerchia/cosign-verify-init/issues/103)) ([07eaed5](https://github.com/fabiocicerchia/cosign-verify-init/commit/07eaed522dbb523965b892e48499c52c4d68e195))
+* Upgrade gitpython 3.1.62 → 3.2.1 ([#98](https://github.com/fabiocicerchia/cosign-verify-init/issues/98)) ([16eae15](https://github.com/fabiocicerchia/cosign-verify-init/commit/16eae156eb5f5011454ff6b7704358b0c3d7ff45))
+
 ## [1.0.0](https://github.com/fabiocicerchia/cosign-verify-init/compare/v0.2.7...v1.0.0) (2026-10-23)
 
 
