@@ -24,6 +24,7 @@ Feature: Choosing what signatures to trust
   Scenario: Key-based verification without a readable key is refused
     Given keyless verification is off
     And no inline key is supplied
+    And the key file path is not set
     And no readable key exists at /keys/cosign.pub
     When the init container starts
     Then standard error says "cosign-verify-init: no public key at /keys/cosign.pub"

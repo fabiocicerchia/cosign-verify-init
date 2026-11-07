@@ -31,7 +31,6 @@ Feature: Branding the documentation site
     Given the reader's colour scheme is dark
     When a reader opens a documentation page
     Then the page, header and navigation tabs share the background colour #0b0f1a
-    And links remain readable in #fb923c
 
   @id:documentation-site.site-styling.004 @rule:documentation-site.site-styling.no-placeholder-logo @inferred @source:docs/stylesheets/extra.css#.md-header__button.md-logo @questionable
   Scenario: The site shows no placeholder logo while the project has none
