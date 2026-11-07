@@ -1,0 +1,705 @@
+{
+ "excluded": {
+  "cosign-verify-init/dockerfile": [
+   {
+    "candidate": "Two-stage build with a separate fetch stage",
+    "covered_by": "",
+    "reason": "TECH_BUILD",
+    "source": "Dockerfile#fetch"
+   },
+   {
+    "candidate": "Base image alpine:3.24 pinned by sha256 digest",
+    "covered_by": "",
+    "reason": "TECH_BUILD",
+    "source": "Dockerfile#FROM"
+   },
+   {
+    "candidate": "apk packages curl and ca-certificates pinned to exact versions",
+    "covered_by": "",
+    "reason": "TECH_BUILD",
+    "source": "Dockerfile#RUN"
+   },
+   {
+    "candidate": "ca-certificates installed in the runtime image for TLS to registries",
+    "covered_by": "",
+    "reason": "INTERNAL_MECHANISM",
+    "source": "Dockerfile#RUN"
+   },
+   {
+    "candidate": "cosign binary installed at /usr/local/bin/cosign with mode 0755",
+    "covered_by": "",
+    "reason": "INTERNAL_MECHANISM",
+    "source": "Dockerfile#COPY"
+   },
+   {
+    "candidate": "VERSION-BUMP marker comment for automated version bumps",
+    "covered_by": "",
+    "reason": "TECH_BUILD",
+    "source": "Dockerfile#COSIGN_VERSION"
+   },
+   {
+    "candidate": "OCI description label text",
+    "covered_by": "packaging.metadata.oci-labels",
+    "reason": "TRIVIAL",
+    "source": "Dockerfile#LABEL"
+   }
+  ],
+  "cosign-verify-init/makefile": [
+   {
+    "candidate": "Running make with no target prints the list of targets and their descriptions",
+    "covered_by": "",
+    "reason": "TECH_DEVTOOLING",
+    "source": "Makefile#help"
+   },
+   {
+    "candidate": "make setup installs the pre-commit hook",
+    "covered_by": "",
+    "reason": "TECH_DEVTOOLING",
+    "source": "Makefile#setup"
+   },
+   {
+    "candidate": "make build builds the image tagged IMAGE:VERSION with COSIGN_VERSION set to VERSION (default 3.1.3)",
+    "covered_by": "",
+    "reason": "TECH_BUILD",
+    "source": "Makefile#build"
+   },
+   {
+    "candidate": "make lint runs every pre-commit hook against all files",
+    "covered_by": "",
+    "reason": "TECH_BUILD",
+    "source": "Makefile#lint"
+   },
+   {
+    "candidate": "make test builds the image, then runs test.sh against it",
+    "covered_by": "",
+    "reason": "TECH_DEVTOOLING",
+    "source": "Makefile#test"
+   },
+   {
+    "candidate": "make install pulls the published image at VERSION",
+    "covered_by": "",
+    "reason": "TECH_DEVTOOLING",
+    "source": "Makefile#install"
+   },
+   {
+    "candidate": "make run builds the image, then runs verify-images with ARGS",
+    "covered_by": "",
+    "reason": "TECH_DEVTOOLING",
+    "source": "Makefile#run"
+   },
+   {
+    "candidate": "make format runs the whitespace, end-of-file and line-ending fixer hooks and ignores their non-zero exits",
+    "covered_by": "",
+    "reason": "TECH_DEVTOOLING",
+    "source": "Makefile#format"
+   },
+   {
+    "candidate": "make analyze refuses with exit 69 and an install hint when trivy is missing, otherwise scans for CRITICAL/HIGH vulnerabilities, misconfigurations and secrets",
+    "covered_by": "",
+    "reason": "TECH_BUILD",
+    "source": "Makefile#analyze"
+   },
+   {
+    "candidate": "make push builds, then pushes IMAGE:VERSION",
+    "covered_by": "",
+    "reason": "TECH_BUILD",
+    "source": "Makefile#push"
+   },
+   {
+    "candidate": "make release builds for linux/amd64 and linux/arm64 and pushes both the VERSION and latest tags",
+    "covered_by": "",
+    "reason": "TECH_BUILD",
+    "source": "Makefile#release"
+   }
+  ],
+  "cosign-verify-init/test": [
+   {
+    "candidate": "Smoke test checks that the image runs `cosign version`",
+    "covered_by": "",
+    "reason": "TECH_BUILD",
+    "source": "test.sh"
+   },
+   {
+    "candidate": "Smoke test makes its temp key dir world-readable for uid 10001 and generates a key pair inside the image",
+    "covered_by": "",
+    "reason": "TECH_DEVTOOLING",
+    "source": "test.sh"
+   },
+   {
+    "candidate": "Smoke test requires an image:tag argument and prints usage otherwise",
+    "covered_by": "",
+    "reason": "TECH_DEVTOOLING",
+    "source": "test.sh"
+   },
+   {
+    "candidate": "Smoke test pulls alpine:3.22 and resolves its repo digest as the unsigned fixture",
+    "covered_by": "",
+    "reason": "TECH_DEVTOOLING",
+    "source": "test.sh"
+   },
+   {
+    "candidate": "Smoke test prints PASS / FAIL with the observed exit code and cleans up its temp dir (leaves it behind if an earlier docker step fails under set -e)",
+    "covered_by": "",
+    "reason": "TECH_DEVTOOLING",
+    "source": "test.sh"
+   },
+   {
+    "candidate": "A digest-pinned image not signed by the trusted key blocks the workload",
+    "covered_by": "",
+    "reason": "UNVERIFIABLE",
+    "source": "verify-images#verify-images"
+   }
+  ],
+  "cosign-verify-init/test-validation": [
+   {
+    "candidate": "Stub cosign that records its operands to a calls file",
+    "covered_by": "",
+    "reason": "TECH_DEVTOOLING",
+    "source": "test-validation.sh"
+   },
+   {
+    "candidate": "Temporary directory created and removed on exit or signal",
+    "covered_by": "",
+    "reason": "TECH_DEVTOOLING",
+    "source": "test-validation.sh"
+   },
+   {
+    "candidate": "Test prints PASS/FAIL lines and exits 1 on an accepted invalid reference",
+    "covered_by": "",
+    "reason": "TECH_DEVTOOLING",
+    "source": "test-validation.sh"
+   },
+   {
+    "candidate": "No cosign call happens when validation fails",
+    "covered_by": "image-verification.digest-pinning.refuse-non-immutable-references",
+    "reason": "DUPLICATE_OF",
+    "source": "test-validation.sh"
+   },
+   {
+    "candidate": "Any image reference that is not repository@sha256 with 64 lowercase hex characters refuses the whole list before anything is verified",
+    "covered_by": "",
+    "reason": "UNVERIFIABLE",
+    "source": "verify-images#VERIFY_IMAGES validation loop"
+   },
+   {
+    "candidate": "Digest-pinned references, with or without a tag, are each verified exactly as given",
+    "covered_by": "",
+    "reason": "UNVERIFIABLE",
+    "source": "verify-images#VERIFY_IMAGES validation loop"
+   },
+   {
+    "candidate": "An image reference shaped like a command-line option is verified as an image, never obeyed as an option",
+    "covered_by": "",
+    "reason": "UNVERIFIABLE",
+    "source": "verify-images#cosign verify loop"
+   }
+  ],
+  "cosign-verify-init/verify-images": [
+   {
+    "candidate": "cosign stdout is discarded and stderr buffered to /tmp/err before replay",
+    "covered_by": "",
+    "reason": "INTERNAL_MECHANISM",
+    "source": "verify-images#VERIFY_IMAGES"
+   },
+   {
+    "candidate": "Inline key written to /tmp/cosign.pub",
+    "covered_by": "",
+    "reason": "INTERNAL_MECHANISM",
+    "source": "verify-images#COSIGN_PUBLIC_KEY"
+   },
+   {
+    "candidate": "KEYLESS enabled only by the exact value true",
+    "covered_by": "",
+    "reason": "TRIVIAL",
+    "source": "verify-images#KEYLESS"
+   },
+   {
+    "candidate": "Smoke test: cosign version runs inside the image",
+    "covered_by": "",
+    "reason": "TECH_DEVTOOLING",
+    "source": "test.sh"
+   },
+   {
+    "candidate": "Stubbed-cosign validation harness",
+    "covered_by": "",
+    "reason": "TECH_DEVTOOLING",
+    "source": "test-validation.sh"
+   },
+   {
+    "candidate": "Per-image progress messages as their own rule",
+    "covered_by": "images.verification.all-must-verify",
+    "reason": "DUPLICATE_OF",
+    "source": "verify-images#VERIFY_IMAGES"
+   }
+  ],
+  "docs/stylesheets": [
+   {
+    "candidate": "Translucent blurred header with hairline divider and shadow on scroll",
+    "covered_by": "",
+    "reason": "TRIVIAL",
+    "source": "docs/stylesheets/extra.css#.md-header"
+   },
+   {
+    "candidate": "Tab link opacity and active weight",
+    "covered_by": "",
+    "reason": "TRIVIAL",
+    "source": "docs/stylesheets/extra.css#.md-tabs__link"
+   },
+   {
+    "candidate": "Heading weights, letter-spacing and kerning",
+    "covered_by": "",
+    "reason": "TRIVIAL",
+    "source": "docs/stylesheets/extra.css#.md-typeset h1"
+   },
+   {
+    "candidate": "Rounded bordered code blocks",
+    "covered_by": "",
+    "reason": "TRIVIAL",
+    "source": "docs/stylesheets/extra.css#.md-typeset .highlight"
+   },
+   {
+    "candidate": "Tables styled as rounded cards with uppercase headers (overflow:hidden on the table; horizontal scrolling comes from Material's wrapper)",
+    "covered_by": "",
+    "reason": "TRIVIAL",
+    "source": "docs/stylesheets/extra.css#.md-typeset table:not([class])"
+   },
+   {
+    "candidate": "Pill-shaped buttons with hover lift",
+    "covered_by": "documentation-site.site-styling.security-accent-palette",
+    "reason": "DUPLICATE_OF",
+    "source": "docs/stylesheets/extra.css#.md-typeset .md-button"
+   },
+   {
+    "candidate": "Hero block centred layout and tagline sizing",
+    "covered_by": "",
+    "reason": "TRIVIAL",
+    "source": "docs/stylesheets/extra.css#.md-typeset .hero"
+   },
+   {
+    "candidate": "Feature cards with rounded borders, hover lift and accent-coloured icons",
+    "covered_by": "",
+    "reason": "TRIVIAL",
+    "source": "docs/stylesheets/extra.css#.md-typeset .grid.cards > ul > li"
+   },
+   {
+    "candidate": "Sidebar nav title and active link weight",
+    "covered_by": "",
+    "reason": "TRIVIAL",
+    "source": "docs/stylesheets/extra.css#.md-nav__title"
+   },
+   {
+    "candidate": "Footer background, divider and muted link colour",
+    "covered_by": "",
+    "reason": "TRIVIAL",
+    "source": "docs/stylesheets/extra.css#.md-footer-meta"
+   },
+   {
+    "candidate": "Smooth scrolling for in-page anchors",
+    "covered_by": "",
+    "reason": "TRIVIAL",
+    "source": "docs/stylesheets/extra.css#html"
+   },
+   {
+    "candidate": "Material primary colour variables wired to the accent pair",
+    "covered_by": "documentation-site.site-styling.security-accent-palette",
+    "reason": "INTERNAL_MECHANISM",
+    "source": "docs/stylesheets/extra.css#:root"
+   }
+  ]
+ },
+ "lifted": {
+  "cosign-verify-init/dockerfile": [
+   {
+    "from_source": "Dockerfile#USER",
+    "rule": "packaging.runtime.runs-as-non-root"
+   },
+   {
+    "from_source": "Dockerfile#COSIGN_VERSION",
+    "rule": "packaging.cosign.verifies-bundle-format-signatures"
+   },
+   {
+    "from_source": "Dockerfile#ENTRYPOINT",
+    "rule": "packaging.runtime.runs-verifier-on-start"
+   }
+  ],
+  "cosign-verify-init/makefile": [],
+  "cosign-verify-init/test": [
+   {
+    "from_source": "test.sh",
+    "rule": "image-verification.gate.unsigned-image-blocks-workload: an image pinned by digest that is not signed by the trusted key makes the init container exit 1 (signature refusal, separate from the 64 for a rejected reference), so the workload never starts"
+   }
+  ],
+  "cosign-verify-init/test-validation": [],
+  "cosign-verify-init/verify-images": [],
+  "docs/stylesheets": []
+ },
+ "retired": [],
+ "scenarios": {
+  "container-packaging.cosign-bundling.001": {
+   "file": "specs/container-packaging/cosign-bundling/bundled-cosign.feature",
+   "fingerprint": "fc3e342e2a53",
+   "human": false,
+   "rule": "packaging.cosign.verifies-bundle-format-signatures",
+   "source": "Dockerfile#COSIGN_VERSION",
+   "status": "inferred",
+   "test": "",
+   "tests": []
+  },
+  "container-packaging.cosign-bundling.002": {
+   "file": "specs/container-packaging/cosign-bundling/bundled-cosign.feature",
+   "fingerprint": "cde1494c8bf3",
+   "human": false,
+   "rule": "packaging.cosign.matches-target-architecture",
+   "source": "Dockerfile#fetch",
+   "status": "inferred",
+   "test": "",
+   "tests": []
+  },
+  "container-packaging.image-metadata.001": {
+   "file": "specs/container-packaging/image-metadata/verifier-image-metadata.feature",
+   "fingerprint": "29fce87f9a7a",
+   "human": false,
+   "rule": "packaging.metadata.oci-labels",
+   "source": "Dockerfile#LABEL",
+   "status": "inferred",
+   "test": "",
+   "tests": []
+  },
+  "container-packaging.image-metadata.002": {
+   "file": "specs/container-packaging/image-metadata/verifier-image-metadata.feature",
+   "fingerprint": "1ca3f174f567",
+   "human": false,
+   "rule": "packaging.metadata.licence-notice-shipped",
+   "source": "Dockerfile#COPY",
+   "status": "inferred",
+   "test": "",
+   "tests": []
+  },
+  "container-packaging.runtime-hardening.001": {
+   "file": "specs/container-packaging/runtime-hardening/verifier-image-runtime.feature",
+   "fingerprint": "18ae799c6d8b",
+   "human": false,
+   "rule": "packaging.runtime.runs-verifier-on-start",
+   "source": "Dockerfile#ENTRYPOINT",
+   "status": "inferred",
+   "test": "",
+   "tests": []
+  },
+  "container-packaging.runtime-hardening.002": {
+   "file": "specs/container-packaging/runtime-hardening/verifier-image-runtime.feature",
+   "fingerprint": "915aa588ec3f",
+   "human": false,
+   "rule": "packaging.runtime.runs-as-non-root",
+   "source": "Dockerfile#USER",
+   "status": "inferred",
+   "test": "",
+   "tests": []
+  },
+  "documentation-site.site-styling.001": {
+   "file": "specs/documentation-site/site-styling/docs-site-theme.feature",
+   "fingerprint": "ac660254fd34",
+   "human": false,
+   "rule": "documentation-site.site-styling.security-accent-palette",
+   "source": "docs/stylesheets/extra.css#:root",
+   "status": "inferred",
+   "test": "",
+   "tests": []
+  },
+  "documentation-site.site-styling.002": {
+   "file": "specs/documentation-site/site-styling/docs-site-theme.feature",
+   "fingerprint": "ac660254fd34",
+   "human": false,
+   "rule": "documentation-site.site-styling.no-third-party-requests",
+   "source": "docs/stylesheets/extra.css#:root",
+   "status": "inferred",
+   "test": "",
+   "tests": []
+  },
+  "documentation-site.site-styling.003": {
+   "file": "specs/documentation-site/site-styling/docs-site-theme.feature",
+   "fingerprint": "433084a194b6",
+   "human": false,
+   "rule": "documentation-site.site-styling.dark-scheme-ground",
+   "source": "docs/stylesheets/extra.css#[data-md-color-scheme=\"slate\"]",
+   "status": "inferred",
+   "test": "",
+   "tests": []
+  },
+  "documentation-site.site-styling.004": {
+   "file": "specs/documentation-site/site-styling/docs-site-theme.feature",
+   "fingerprint": "c702704e5aae",
+   "human": false,
+   "rule": "documentation-site.site-styling.no-placeholder-logo",
+   "source": "docs/stylesheets/extra.css#.md-header__button.md-logo",
+   "status": "inferred",
+   "test": "",
+   "tests": []
+  },
+  "image-verification.digest-pinning.001": {
+   "file": "specs/image-verification/digest-pinning/pinned-image-references.feature",
+   "fingerprint": "b7d8502acdfa",
+   "human": false,
+   "rule": "images.list.required",
+   "source": "verify-images#VERIFY_IMAGES",
+   "status": "inferred",
+   "test": "",
+   "tests": []
+  },
+  "image-verification.digest-pinning.002": {
+   "file": "specs/image-verification/digest-pinning/pinned-image-references.feature",
+   "fingerprint": "b7d8502acdfa",
+   "human": false,
+   "rule": "images.references.pinned-digest-required",
+   "source": "verify-images#VERIFY_IMAGES",
+   "status": "verified",
+   "test": "test-validation.sh#immutable-reference validation",
+   "tests": [
+    "test-validation.sh#immutable-reference validation"
+   ]
+  },
+  "image-verification.digest-pinning.003": {
+   "file": "specs/image-verification/digest-pinning/pinned-image-references.feature",
+   "fingerprint": "b7d8502acdfa",
+   "human": false,
+   "rule": "images.references.tag-plus-digest-accepted",
+   "source": "verify-images#VERIFY_IMAGES",
+   "status": "verified",
+   "test": "test-validation.sh#immutable-reference validation",
+   "tests": [
+    "test-validation.sh#immutable-reference validation"
+   ]
+  },
+  "image-verification.fail-closed-gate.001": {
+   "file": "specs/image-verification/fail-closed-gate/signature-gate.feature",
+   "fingerprint": "b7d8502acdfa",
+   "human": false,
+   "rule": "images.verification.all-must-verify",
+   "source": "verify-images#VERIFY_IMAGES",
+   "status": "inferred",
+   "test": "",
+   "tests": []
+  },
+  "image-verification.fail-closed-gate.002": {
+   "file": "specs/image-verification/fail-closed-gate/signature-gate.feature",
+   "fingerprint": "b7d8502acdfa",
+   "human": false,
+   "rule": "images.verification.stop-at-first-failure",
+   "source": "verify-images#VERIFY_IMAGES",
+   "status": "verified",
+   "test": "test.sh#Smoke test",
+   "tests": [
+    "test.sh#Smoke test"
+   ]
+  },
+  "image-verification.fail-closed-gate.003": {
+   "file": "specs/image-verification/fail-closed-gate/signature-gate.feature",
+   "fingerprint": "b7d8502acdfa",
+   "human": false,
+   "rule": "images.references.operand-only",
+   "source": "verify-images#VERIFY_IMAGES",
+   "status": "verified",
+   "test": "test-validation.sh#immutable-reference validation",
+   "tests": [
+    "test-validation.sh#immutable-reference validation"
+   ]
+  },
+  "image-verification.fail-closed-gate.004": {
+   "file": "specs/image-verification/fail-closed-gate/signature-gate.feature",
+   "fingerprint": "b7d8502acdfa",
+   "human": false,
+   "rule": "images.list.blank-list-passes",
+   "source": "verify-images#VERIFY_IMAGES",
+   "status": "inferred",
+   "test": "",
+   "tests": []
+  },
+  "trust-configuration.key-based-trust.001": {
+   "file": "specs/trust-configuration/key-based-trust/trust-configuration.feature",
+   "fingerprint": "08043aea1e2f",
+   "human": false,
+   "rule": "trust.key.source-precedence",
+   "source": "verify-images#COSIGN_PUBLIC_KEY",
+   "status": "inferred",
+   "test": "",
+   "tests": []
+  },
+  "trust-configuration.key-based-trust.002": {
+   "file": "specs/trust-configuration/key-based-trust/trust-configuration.feature",
+   "fingerprint": "571994413661",
+   "human": false,
+   "rule": "trust.key.missing-refused",
+   "source": "verify-images#COSIGN_KEY_PATH",
+   "status": "inferred",
+   "test": "",
+   "tests": []
+  },
+  "trust-configuration.key-based-trust.003": {
+   "file": "specs/trust-configuration/key-based-trust/trust-configuration.feature",
+   "fingerprint": "891d30e07619",
+   "human": false,
+   "rule": "trust.keyless.identity-and-issuer-required",
+   "source": "verify-images#KEYLESS",
+   "status": "inferred",
+   "test": "",
+   "tests": []
+  },
+  "trust-configuration.key-based-trust.004": {
+   "file": "specs/trust-configuration/key-based-trust/trust-configuration.feature",
+   "fingerprint": "5c40a6f692f3",
+   "human": false,
+   "rule": "trust.tlog.skip-opt-in",
+   "source": "verify-images#INSECURE_SKIP_TLOG",
+   "status": "inferred",
+   "test": "",
+   "tests": []
+  }
+ },
+ "taxonomy": {
+  "domains": [
+   {
+    "areas": [
+     {
+      "description": "Accepting the space-separated set of images to verify and requiring that it is supplied.",
+      "slug": "image-list",
+      "title": "Image list input"
+     },
+     {
+      "description": "Refusing mutable tags and malformed sha256 digests so only immutable repository@sha256 references are verified.",
+      "slug": "digest-pinning",
+      "title": "Digest pinning"
+     },
+     {
+      "description": "Running cosign against each image in turn, treating references strictly as operands, and stopping at the first failure.",
+      "slug": "signature-check",
+      "title": "Signature check"
+     },
+     {
+      "description": "Exit codes and outcomes that block the workload when input is invalid or any signature does not verify.",
+      "slug": "fail-closed-gate",
+      "title": "Fail-closed gate"
+     }
+    ],
+    "description": "Checking that every workload image carries a valid cosign signature before the pod is allowed to start.",
+    "slug": "image-verification",
+    "title": "Image verification"
+   },
+   {
+    "areas": [
+     {
+      "description": "Verifying against a public key supplied inline or mounted from a file, with a default key location.",
+      "slug": "key-based-trust",
+      "title": "Key-based trust"
+     },
+     {
+      "description": "Verifying against a signer certificate identity and OIDC issuer instead of a static key.",
+      "slug": "keyless-trust",
+      "title": "Keyless trust"
+     },
+     {
+      "description": "Optionally skipping the transparency-log check for air-gapped environments.",
+      "slug": "transparency-log",
+      "title": "Transparency log"
+     }
+    ],
+    "description": "How operators tell the verifier which signers and trust sources to accept.",
+    "slug": "trust-configuration",
+    "title": "Trust configuration"
+   },
+   {
+    "areas": [
+     {
+      "description": "Per-image verifying, OK and all-verified messages written to standard output.",
+      "slug": "progress-messages",
+      "title": "Progress messages"
+     },
+     {
+      "description": "Clear error messages and cosign's own output on standard error when input is rejected or verification fails.",
+      "slug": "error-diagnostics",
+      "title": "Error diagnostics"
+     }
+    ],
+    "description": "What the verifier tells operators about each run through its logs.",
+    "slug": "verification-reporting",
+    "title": "Verification reporting"
+   },
+   {
+    "areas": [
+     {
+      "description": "Fetching and embedding a pinned cosign 3.x binary for the target architecture.",
+      "slug": "cosign-bundling",
+      "title": "Cosign bundling"
+     },
+     {
+      "description": "Pinned base image, non-root user, minimal packages and a one-shot entrypoint with no health check.",
+      "slug": "runtime-hardening",
+      "title": "Runtime hardening"
+     },
+     {
+      "description": "OCI labels and licence notice describing the published image.",
+      "slug": "image-metadata",
+      "title": "Image metadata"
+     }
+    ],
+    "description": "The minimal, hardened container image that ships the verifier as a Kubernetes init container.",
+    "slug": "container-packaging",
+    "title": "Container packaging"
+   },
+   {
+    "areas": [
+     {
+      "description": "Tests with a stubbed cosign confirming invalid references are refused and valid ones reach cosign safely.",
+      "slug": "reference-validation-tests",
+      "title": "Reference validation tests"
+     },
+     {
+      "description": "End-to-end check that the built image runs cosign and fails an unsigned image with a random key.",
+      "slug": "smoke-tests",
+      "title": "Smoke tests"
+     }
+    ],
+    "description": "Automated tests that prove the verifier rejects what it must reject.",
+    "slug": "quality-assurance",
+    "title": "Quality assurance"
+   },
+   {
+    "areas": [
+     {
+      "description": "Building, pulling and running the image locally through make targets and help output.",
+      "slug": "local-build-run",
+      "title": "Local build and run"
+     },
+     {
+      "description": "Pre-commit hook setup, linting, auto-formatting and security scanning of the tree.",
+      "slug": "code-quality-gates",
+      "title": "Code quality gates"
+     },
+     {
+      "description": "Pushing tagged images and multi-architecture release builds with version and latest tags.",
+      "slug": "publishing-releases",
+      "title": "Publishing and releases"
+     }
+    ],
+    "description": "Build, lint, scan, publish and release workflows for maintainers.",
+    "slug": "developer-tooling",
+    "title": "Developer tooling"
+   },
+   {
+    "areas": [
+     {
+      "description": "Custom visual theme and layout styles applied to the documentation site.",
+      "slug": "site-styling",
+      "title": "Site styling"
+     },
+     {
+      "description": "Deployment examples and manifests showing how to wire the init container into workloads.",
+      "slug": "usage-guides",
+      "title": "Usage guides"
+     }
+    ],
+    "description": "The published user documentation for the project.",
+    "slug": "documentation-site",
+    "title": "Documentation site"
+   }
+  ]
+ }
+}
