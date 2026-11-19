@@ -10,7 +10,7 @@
 # VERSION-BUMP
 ARG COSIGN_VERSION=3.1.3
 
-FROM alpine:3.24@sha256:be2656061b536c1883c4034790e21d0a09c5aaaf51968b89368a3c0371ea2c9a AS fetch
+FROM alpine:3.24@sha256:f59abe656b692d901e184be3445e084786602108599d2a51d229c0f5a48c71bf AS fetch
 ARG COSIGN_VERSION
 ARG TARGETARCH=amd64
 # ponytail: apk versions pinned for scanners; bump when alpine 3.24 patches them
@@ -19,7 +19,7 @@ RUN curl -fsSLo /cosign \
       "https://github.com/sigstore/cosign/releases/download/v${COSIGN_VERSION}/cosign-linux-${TARGETARCH}" \
  && chmod 0755 /cosign
 
-FROM alpine:3.24@sha256:be2656061b536c1883c4034790e21d0a09c5aaaf51968b89368a3c0371ea2c9a
+FROM alpine:3.24@sha256:f59abe656b692d901e184be3445e084786602108599d2a51d229c0f5a48c71bf
 ARG COSIGN_VERSION
 LABEL org.opencontainers.image.title="cosign-verify-init" \
       org.opencontainers.image.description="Init container verifying image signatures before the workload starts" \
